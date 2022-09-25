@@ -20,7 +20,6 @@ print(p1.atributos())
 
          
 one = Room1(["up","down"], "Castle", p1)
-root2 = Tk()
 dos = Room1(["west", "south"], "shack",p1)
 mundo = World()
 mundo.add_level(one)
