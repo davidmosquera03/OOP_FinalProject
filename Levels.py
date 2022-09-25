@@ -16,10 +16,12 @@ class Level:
         self.actions = actions
         self.info = info
         self.next = None
+        self.player = player
     def enter(self):
         pass
     def exit(self):
         pass
+
 class Room1(Level):
     def enter(self):
         onRoom = True
@@ -32,7 +34,12 @@ class Room1(Level):
                 print("decision no válida")
                 op = input()
             if op==self.actions[0]:
-                print("No hay nada aqui")
+                print("Combate")
+                enemigo1 = Enemigo("Orco",5,4,10,400)
+                win = combate(self.player,enemigo1)
+                if win!=self.player.nombre:
+                    print("Mision Fallida")
+                    self.enter()
             elif op == self.actions[1]:
                 print("Mision cumplida")
                 onRoom = False
@@ -53,3 +60,4 @@ class World:
         while(L!=None):
             L.enter()
             L = L.next
+        print("Ha ganado el juego")
