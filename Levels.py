@@ -8,8 +8,13 @@ class Pregunta:
         self.q = q
         self.opciones = opciones
         self.correcta = correcta
+        self.intentos = 1
     def hacer(self,player: Personaje):
         print(self.q)
+        print(self.opciones)
+        res = int(input())
+        while res!=(self.correcta+1):
+            print("Incorrecto")
 
 class Level:
     def __init__(self, actions : List, info : str, player: Personaje) -> None:
@@ -41,7 +46,9 @@ class Room1(Level):
                     print("Mision Fallida")
                     self.enter()
             elif op == self.actions[1]:
+
                 print("Mision cumplida")
+                self.player.subir_nivel()
                 onRoom = False
 
 class World:

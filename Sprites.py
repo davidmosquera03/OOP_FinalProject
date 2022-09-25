@@ -20,6 +20,7 @@ class Personaje:
         self.fuerza +=  fuerza
         self.inteligencia += inteligencia
         self.defensa += defensa
+        self.atributos()
      
     def esta_vivo(self):
         return self.vida > 0 
