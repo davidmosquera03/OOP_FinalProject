@@ -1,3 +1,4 @@
+import time
 class Personaje:
     
     ## Aquí colocare los metodos
@@ -29,7 +30,10 @@ class Personaje:
         
         
     def daño(self, enemigo):
-        return self.fuerza - enemigo.defensa
+        daño = self.fuerza - enemigo.defensa
+        if daño<0:
+            return 0
+        return daño
     
     def atacar (self,enemigo):
         daño = self.daño(enemigo)
@@ -132,6 +136,12 @@ class arquero(Personaje):
         else: 
             return 0
 
+class Enemigo(Personaje):
+    def morir(self):
+        self.vida = 0
+        print(f" El Enemigo {self.nombre} esta muerto")
+
+
 def combate(j1: Personaje,j2: Personaje):
     turno = 1
     ganador = None
@@ -139,6 +149,7 @@ def combate(j1: Personaje,j2: Personaje):
         print("\nTurno" , turno )
         print(f">>>> Accion de {j1.nombre} : ", sep="")
         j1.atacar(j2)
+        time.sleep(2)
         if(j2.esta_vivo()):
             print(f">>>> Accion de {j2.nombre} : ", sep="")
             j2.atacar(j1)
