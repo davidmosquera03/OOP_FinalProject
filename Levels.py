@@ -2,7 +2,7 @@ from typing import List
 from tkinter import *
 from PIL import ImageTk, Image
 from Sprites import *
-
+import time
 class Pregunta:
     def __init__(self,enunciado:str,opciones: List[str], correcta: int, bono: int) -> None:
         self.enunciado = enunciado
@@ -44,6 +44,7 @@ class Level:
     def __init__(self, actions : List, info : str, player: Personaje) -> None:
         self.actions = actions
         self.actions.append("Ver atributos")
+        self.actions.append("Cambiar arma")
         self.info = info
         self.next = None
         self.player = player
@@ -62,6 +63,7 @@ class Level:
                 print(f">>>> Accion de {j2.nombre} : ", sep="")
                 j2.atacar(j1)
                 turno += 1
+                time.sleep(2)
         if j1.esta_vivo():
             print(f"\nHa ganado: {j1.nombre}")
             ganador = j1.nombre
@@ -76,6 +78,7 @@ class Room1(Level):
     def enter(self):
         onRoom = True
         print(self.info)
+        time.sleep(1.5)
         while onRoom:
             print(self.actions)
             print("Decision")
@@ -85,12 +88,14 @@ class Room1(Level):
                 op = input()
             if op==self.actions[0]:
                 print("Combate")
-                enemigo1 = Enemigo("Orco",5,4,10,400)
+                enemigo1 = Enemigo("Orco",20,30,10,400)
                 win = self.combate(self.player,enemigo1)
                 if win!=self.player.nombre:
                     print("Mision Fallida")
                     self.enter()
             elif op==self.actions[-1]:
+                self.player.cambiar_arma()
+            elif op==self.actions[-2]:
                 self.player.atributos()
             elif op == self.actions[1]:
                 q1 = Pregunta("¿Cuál es un método?",["vida","recoger()","edad"],1,5)
@@ -116,7 +121,9 @@ class World:
             L.enter()
             L = L.next
         print("Ha ganado el juego")
-
+"""
 a = Pregunta("a",["1","2","3"],0,10)
 b = a = Pregunta("c",["1","2","3"],2,10)
 banco = [a,b]
+"""
+

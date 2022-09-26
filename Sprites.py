@@ -1,7 +1,6 @@
 import time
 class Personaje:
-    
-    ## Aquí colocare los metodos
+
     def __init__(self, nombre, fuerza, inteligencia,defensa,vida):
         self.nombre = nombre
         self.fuerza = fuerza
@@ -11,7 +10,7 @@ class Personaje:
         self.nivel = 1 
     
     def atributos(self):
-        print(self.nombre, " : " , sep="")
+        print(self.nombre, " : " ,)
         print("-Nivel: ",self.nivel)
         print("-Fuerza: ", self.fuerza)
         print("-Inteligencia: ", self.inteligencia)
@@ -21,6 +20,7 @@ class Personaje:
     def subir_nivel(self, fuerza, inteligencia, defensa):
         self.nivel+=1
         print("Has subido tu personaje al nivel ",self.nivel)
+        time.sleep(1)
         self.fuerza +=  fuerza
         self.inteligencia += inteligencia
         self.defensa += defensa
@@ -67,7 +67,7 @@ class guerrero(Personaje):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.espada = 1
         self.cambiar_arma()
-        
+
     def cambiar_arma(self):
         opcion = int(input("Elige un arma: (1) Acero Valkyria, daño +8 defensa +5. (2) Matadragones, daño +10 \n"))
         if opcion == 1:
@@ -80,7 +80,7 @@ class guerrero(Personaje):
         
     def atributos(self):
         super().atributos()
-        print(f"-Espada: {self.espada}")
+        return (f"-Espada: {self.espada}")
         
     def daño(self,enemigo):
         daño = self.fuerza*self.espada - enemigo.defensa
@@ -108,7 +108,7 @@ class mago(Personaje):
         
     def atributos(self):
         super().atributos()  
-        print(f"-Libro: {self.libro}")
+        return(f"-Libro: {self.libro}")
         
     def daño(self, enemigo):
         daño = self.inteligencia*self.libro - enemigo.defensa
@@ -135,7 +135,7 @@ class arquero(Personaje):
     
     def atributos(self):
         super().atributos()
-        print(f"-Critico: {self.critico}")
+        return(f"-Critico: {self.critico}")
     
     def daño(self, enemigo):
         daño = self.fuerza * self.critico - enemigo.defensa 
@@ -147,6 +147,6 @@ class arquero(Personaje):
 class Enemigo(Personaje):
     def morir(self):
         self.vida = 0
-        print(f" El Enemigo {self.nombre} esta muerto")
+        print(f" El Enemigo {self.nombre} está muerto")
 
 
