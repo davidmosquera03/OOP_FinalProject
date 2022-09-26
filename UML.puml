@@ -1,1 +1,58 @@
 # Aqui va el Diagrama de Clases
+@startuml
+top to bottom direction
+class Personaje{
++nombre : str
++fuerza : Float 
++inteligencia: Float
++defensa: Float
++vida: Float 
++nivel: int
++atributos()
++subir_nivel()
++esta_vivo()
++morir()
++daño()
++atacar()
++ cambiar_arma()
+}
+class Guerrero{
++ espada: FLoat
+}
+class Arquero{
++ critico: Float
+}
+class Mago{
++libro: Float
+}
+class Mundo{
++PTR
++ULT
++add_level()
++start()
+}
+class Level{
++ actions: List[str]
++ info: str
++ next: Level
++ player: Personaje
++ enter()
++ combate()
+}
+class Enemigo{
+}
+class Pregunta{
++ enunciado: str
++opciones: List[str]
++correcta: int
++bono: int
++hacer()
+}
+Mundo o-- Level
+Guerrero --|> Personaje
+Enemigo --|> Personaje
+Mago --|> Personaje
+Arquero --|> Personaje
+Personaje--o Level
+Pregunta --o Level
+@enduml

@@ -1,5 +1,6 @@
 from Sprites import *
 from Levels import *
+
 print("Escribe tu nombre")
 name = input()
 while len(name)==0:

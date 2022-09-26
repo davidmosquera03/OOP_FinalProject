@@ -7,16 +7,20 @@ class Personaje:
         self.fuerza = fuerza
         self.inteligencia = inteligencia
         self.defensa = defensa
-        self.vida = vida   
+        self.vida = vida 
+        self.nivel = 1 
     
     def atributos(self):
         print(self.nombre, " : " , sep="")
+        print("-Nivel: ",self.nivel)
         print("-Fuerza: ", self.fuerza)
         print("-Inteligencia: ", self.inteligencia)
         print("-Defensa : " , self.defensa)
         print("-Vida: " , self.vida)
      
     def subir_nivel(self, fuerza, inteligencia, defensa):
+        self.nivel+=1
+        print("Has subido tu personaje al nivel ",self.nivel)
         self.fuerza +=  fuerza
         self.inteligencia += inteligencia
         self.defensa += defensa
@@ -54,6 +58,8 @@ class Personaje:
             print("Error, has introducido un valor negativo")
         else:
             self.fuerza = fuerza
+    def cambiar_arma(self):
+        pass
   
 ##PARTE DE HERENCIA
 class guerrero(Personaje):
@@ -61,6 +67,7 @@ class guerrero(Personaje):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.espada = 1
         self.cambiar_arma()
+        
     def cambiar_arma(self):
         opcion = int(input("Elige un arma: (1) Acero Valkyria, daño +8 defensa +5. (2) Matadragones, daño +10 \n"))
         if opcion == 1:
@@ -143,24 +150,3 @@ class Enemigo(Personaje):
         print(f" El Enemigo {self.nombre} esta muerto")
 
 
-def combate(j1: Personaje,j2: Personaje):
-    turno = 1
-    ganador = None
-    while j1.esta_vivo() and j2.esta_vivo():
-        print("\nTurno" , turno )
-        print(f">>>> Accion de {j1.nombre} : ", sep="")
-        j1.atacar(j2)
-        time.sleep(2)
-        if(j2.esta_vivo()):
-            print(f">>>> Accion de {j2.nombre} : ", sep="")
-            j2.atacar(j1)
-            turno += 1
-    if j1.esta_vivo():
-        print(f"\nHa ganado: {j1.nombre}")
-        ganador = j1.nombre
-    elif j2.esta_vivo():
-        print(f"\nHa ganado: {j2.nombre} ")
-        ganador = j2.nombre
-    else:
-        print(f"\nEmpate entre: {j1.nombre} y {j2.nombre}")
-    return ganador
