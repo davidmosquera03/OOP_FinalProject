@@ -80,7 +80,7 @@ class guerrero(Personaje):
         
     def atributos(self):
         super().atributos()
-        return (f"-Espada: {self.espada}")
+        print(f"-Espada: {self.espada}")
         
     def daño(self,enemigo):
         daño = self.fuerza*self.espada - enemigo.defensa
@@ -108,7 +108,7 @@ class mago(Personaje):
         
     def atributos(self):
         super().atributos()  
-        return(f"-Libro: {self.libro}")
+        print(f"-Libro: {self.libro}")
         
     def daño(self, enemigo):
         daño = self.inteligencia*self.libro - enemigo.defensa
@@ -135,7 +135,8 @@ class arquero(Personaje):
     
     def atributos(self):
         super().atributos()
-        return(f"-Critico: {self.critico}")
+        print(f"-Critico: {self.critico}")
+     
     
     def daño(self, enemigo):
         daño = self.fuerza * self.critico - enemigo.defensa 

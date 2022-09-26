@@ -1,4 +1,4 @@
-# Aqui va el Diagrama de Clases
+
 @startuml
 top to bottom direction
 class Personaje{
@@ -17,7 +17,7 @@ class Personaje{
 + cambiar_arma()
 }
 class Guerrero{
-+ espada: FLoat
++ espada: Float
 }
 class Arquero{
 + critico: Float
@@ -36,6 +36,7 @@ class Level{
 + info: str
 + next: Level
 + player: Personaje
++ banco: List[Pregunta]
 + enter()
 + combate()
 }

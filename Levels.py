@@ -13,8 +13,8 @@ class Pregunta:
         self.intentos = 1
         self.bono = bono
         """
-        Constructo de clase de Pregunta
-        q: pregunta
+        Constructor de clase de Pregunta
+        enunciado: pregunta
         opciones: opciones de respuesta
         correcta: indice de respuesta correcta
         intentos: numero de intentos realizados
@@ -28,11 +28,11 @@ class Pregunta:
         """
         print(self.enunciado)
         print(self.opciones)
-        res = int(input())
-        while res!=(self.correcta+1):
+        res = input()
+        while res!=str(self.correcta+1):
             print("Incorrecto")
             self.intentos+=1
-            res = int(input())
+            res = input()
         player.inteligencia+= (self.bono)-(self.intentos-1)
         player.atributos()
         
@@ -41,15 +41,34 @@ class Pregunta:
         
 
 class Level:
-    def __init__(self, actions : List, info : str, player: Personaje) -> None:
+    def __init__(self, actions : List, info : str, player: Personaje, banco: List[Pregunta]) -> None:
         self.actions = actions
-        self.actions.append("Ver atributos")
-        self.actions.append("Cambiar arma")
+        self.actions.append("ver atributos")
+        self.actions.append("cambiar arma")
         self.info = info
         self.next = None
         self.player = player
+        self.banco = banco
+        """
+        Constructor de clase Level
+        actions: acciones que puede tomar el Personaje
+        info: descripción inicial del escenario
+        next: siguiente nivel
+        player: Personaje en el nivel
+        banco: Banco de preguntas disponibles en el nivel
+        """
     def enter(self):
-        pass
+        print(self.info)
+        time.sleep(1.5)
+
+    def notificar(self, datos: List[str],pause: float):
+        """
+        Brinda información al usuario con tiempo para leer
+        """
+        for x in datos:
+            print(x)
+            time.sleep(pause)
+
     def combate(self, j1: Personaje,j2: Personaje):
         turno = 1
         ganador = None
@@ -58,12 +77,12 @@ class Level:
             print("\nTurno" , turno )
             print(f">>>> Accion de {j1.nombre} : ", sep="")
             j1.atacar(j2)
-            time.sleep(2)
+            time.sleep(2.5)
             if(j2.esta_vivo()):
                 print(f">>>> Accion de {j2.nombre} : ", sep="")
                 j2.atacar(j1)
                 turno += 1
-                time.sleep(2)
+                time.sleep(2.5)
         if j1.esta_vivo():
             print(f"\nHa ganado: {j1.nombre}")
             ganador = j1.nombre
@@ -75,31 +94,35 @@ class Level:
         return ganador
 
 class Room1(Level):
+
     def enter(self):
-        onRoom = True
-        print(self.info)
-        time.sleep(1.5)
+        super().enter()
+        onRoom  = True
         while onRoom:
             print(self.actions)
             print("Decision")
             op = input()
+            op = op.lower()
             while op not in self.actions:
                 print("decision no válida")
                 op = input()
+
             if op==self.actions[0]:
-                print("Combate")
+                self.notificar(["Una figura en el fondo se acerca","¡Es un orco listo para pelear!"],1.25)
                 enemigo1 = Enemigo("Orco",20,30,10,400)
                 win = self.combate(self.player,enemigo1)
                 if win!=self.player.nombre:
-                    print("Mision Fallida")
+                    self.notificar(["El Orco sonrie victorioso","Has fallado","Intentando de nuevo..."],1.25)
                     self.enter()
             elif op==self.actions[-1]:
                 self.player.cambiar_arma()
             elif op==self.actions[-2]:
                 self.player.atributos()
             elif op == self.actions[1]:
-                q1 = Pregunta("¿Cuál es un método?",["vida","recoger()","edad"],1,5)
-                q1.hacer(self.player)
+                self.notificar(["Un troll bloquea una puerta",
+                "Promete dejarte pasar si respondes correctamente","..."],1.25)
+                for x in self.banco:
+                    x.hacer(self.player)
                 print("Mision cumplida")
                 self.player.subir_nivel(5,5,5)
                 onRoom = False
