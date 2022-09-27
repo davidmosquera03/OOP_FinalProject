@@ -3,6 +3,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 from Sprites import *
 import time
+
 class Pregunta:
     def __init__(self,enunciado:str,opciones: List[str], correcta: int, bono: int) -> None:
         self.enunciado = enunciado
@@ -43,8 +44,8 @@ class Pregunta:
 class Level:
     def __init__(self, actions : List, info : str, player: Personaje, banco: List[Pregunta]) -> None:
         self.actions = actions
-        self.actions.append("ver atributos")
-        self.actions.append("cambiar arma")
+        self.actions=["cambiar arma","ver atributos"]
+        self.actions.extend(actions)
         self.info = info
         self.next = None
         self.player = player
@@ -60,6 +61,12 @@ class Level:
     def enter(self):
         print(self.info)
         time.sleep(1.5)
+    
+    def update(self, new_actions: List[str]):
+        i=2
+        for x in new_actions:
+            self.actions[i]=x
+            i+=1
 
     def notificar(self, datos: List[str],pause: float):
         """
@@ -107,20 +114,24 @@ class Room1(Level):
                 print("decision no válida")
                 op = input()
 
-            if op==self.actions[0]:
+            if op==self.actions[2]:
                 self.notificar(["Una figura en el fondo se acerca","¡Es un orco listo para pelear!"],1.25)
                 enemigo1 = Enemigo("Orco",20,30,10,400)
                 win = self.combate(self.player,enemigo1)
                 if win!=self.player.nombre:
                     self.notificar(["El Orco sonrie victorioso","Has fallado","Intentando de nuevo..."],1.25)
                     self.enter()
-            elif op==self.actions[-1]:
+                else:
+                    #self.update(["revisar cadaver","seguir por tunel"])
+                    pass
+            elif op==self.actions[0]:
                 self.player.cambiar_arma()
-            elif op==self.actions[-2]:
+            elif op==self.actions[1]:
                 self.player.atributos()
-            elif op == self.actions[1]:
+            elif op == self.actions[3]:
                 self.notificar(["Un troll bloquea una puerta",
-                "Promete dejarte pasar si respondes correctamente","..."],1.25)
+                                "Promete dejarte pasar si respondes correctamente",
+                                "..."],1.25)
                 for x in self.banco:
                     x.hacer(self.player)
                 print("Mision cumplida")
@@ -144,9 +155,5 @@ class World:
             L.enter()
             L = L.next
         print("Ha ganado el juego")
-"""
-a = Pregunta("a",["1","2","3"],0,10)
-b = a = Pregunta("c",["1","2","3"],2,10)
-banco = [a,b]
-"""
+
 

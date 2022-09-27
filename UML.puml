@@ -26,8 +26,8 @@ class Mago{
 +libro: Float
 }
 class Mundo{
-+PTR
-+ULT
++PTR: Level:
++ULT: Level
 +add_level()
 +start()
 }
@@ -39,6 +39,7 @@ class Level{
 + banco: List[Pregunta]
 + enter()
 + combate()
++ notificar()
 }
 class Enemigo{
 }
