@@ -1,3 +1,4 @@
+from re import T
 import time
 class Personaje:
 
@@ -69,14 +70,23 @@ class guerrero(Personaje):
         self.cambiar_arma()
 
     def cambiar_arma(self):
-        opcion = int(input("Elige un arma: (1) Acero Valkyria, daño +8 defensa +5. (2) Matadragones, daño +10 \n"))
-        if opcion == 1:
-            self.espada = 8 
-            self.defensa += 2
-        elif opcion == 2 :
-            self.espada = 10
-        else:
-            print("Numero de arma incorrecto")
+        while True: 
+            try:
+                opcion = int(input("Elige un arma: (1) Acero Valkyria, daño +8 defensa +5."+ 
+                                        "(2) Matadragones, daño +10 \n"))
+                if opcion == 1:
+                    self.fuerza+=8
+                    self.defensa+=5
+                    break
+                elif opcion ==2:
+                    self.fuerza+=10
+                    break
+                else:
+                    print("Numero no valido")
+            except:
+                print("Se requiere un numero")
+
+        
         
     def atributos(self):
         super().atributos()
@@ -97,14 +107,21 @@ class mago(Personaje):
         self.cambiar_arma()    
     
     def cambiar_arma(self):
-            opcion = int(input("Elige un arma: (1) Cetro Vampirico, libro +14. (2) Cetro de valhala , libro +10 vida+5\n"))
-            if opcion == 1:
-                self.libro = 14
-            elif opcion == 2 :
-                self.libro = 10
-                self.vida +=5
-            else:
-                print("Numero de arma incorrecto")    
+        while True: 
+            try:
+                opcion = int(input("Elige un arma: (1) Cetro Vampirico, libro +14."+
+                            " (2) Cetro de valhala , libro +10 vida+5\n"))
+                if opcion == 1:
+                    self.libro+=14
+                    break
+                elif opcion ==2:
+                    self.libro =10
+                    self.vida+=5
+                    break
+                else:
+                    print("Numero no valido")
+            except:
+                print("Se requiere un numero")  
         
     def atributos(self):
         super().atributos()  
@@ -124,14 +141,21 @@ class arquero(Personaje):
         self.cambiar_arma()
     
     def cambiar_arma(self):
-            opcion = int(input("Elige un arma: (1) Arco Ionico, critico +8 vida +5. (2) Matacraquens , critico +19\n "))
-            if opcion == 1:
-                self.critico = 8
-                self.vida+=5
-            elif opcion == 2 :
-                self.critico = 19
-            else:
-                print("Numero de arma incorrecto")    
+         while True: 
+            try:
+                opcion = int(input("Elige un arma: (1) Arco Ionico, critico +8 vida +5."+
+                                             "(2) Matacraquens , critico +19\n "))
+                if opcion == 1:
+                    self.critico = 8
+                    self.vida+=5
+                    break
+                elif opcion ==2:
+                    self.critico = 19
+                    break
+                else:
+                    print("Numero no valido")
+            except:
+                print("Se requiere un numero")  
     
     def atributos(self):
         super().atributos()

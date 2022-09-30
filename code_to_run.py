@@ -9,11 +9,13 @@ while len(name)==0:
     name = input()
 print("Ahora selecciona una clase")
 print("(1) Guerrero (2) Mago (3) Arquero")
-op = int(input())
-while op<0 or op>3:
+op = input()
+n = ["1","2","3"]
+while op not in n:
     print("Introduce una opción valida")
-    op=int(input())
+    op=input()
 print("A continuación escogeras tu arma inicial")
+op = int(op)
 time.sleep(1)
 if op==1:
     p1 = guerrero(name,25,5,20,100) #nombre, fuerza, inteligencia, defensa, vida
@@ -24,10 +26,12 @@ else:
 p1.atributos()
 
 a = Pregunta("¿Cuál es un metodo ?",[" vida "," subir_nivel()"," defensa"],1,10) 
-b = Pregunta("¿Qué expresión se refiere a la clase madre?",["parent.()","ultra.()","super.()"],2,10)
-banco =[a,b]       
+b = Pregunta("¿Qué expresión se refiere a la clase madre?",["parent.()","ultra.()","super.()"],2,10)      
 c = Pregunta("Cual es mejor para encapsular",["Herencia","Composición"],1,2)
+banco =[a,b] 
+
 one = Room1(["izquierda","derecha"], "Te encuentras en una cueva oscura, 2 caminos se distinguen", p1, [c])
+
 dos = Room1(["subir", "bajar"], "Shack",p1,banco)
 mundo = World()
 mundo.add_level(one)

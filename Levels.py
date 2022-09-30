@@ -1,20 +1,22 @@
+
 from typing import List
 from tkinter import *
 from PIL import ImageTk, Image
 from Sprites import *
 import time
-
+import abc
 class Pregunta:
     def __init__(self,enunciado:str,opciones: List[str], correcta: int, bono: int) -> None:
         self.enunciado = enunciado
         self.opciones = opciones
         if correcta>=len(self.opciones):
-            raise ValueError("Indice")
+            raise ValueError("Excede el indice maximo")
         self.correcta = correcta
         self.intentos = 1
         self.bono = bono
         """
         Constructor de clase de Pregunta
+
         enunciado: pregunta
         opciones: opciones de respuesta
         correcta: indice de respuesta correcta
@@ -41,7 +43,7 @@ class Pregunta:
         return f"{self.enunciado}"
         
 
-class Level:
+class Level(abc.ABC):
     def __init__(self, actions : List, info : str, player: Personaje, banco: List[Pregunta]) -> None:
         self.actions = actions
         self.actions=["cambiar arma","ver atributos"]
@@ -51,7 +53,8 @@ class Level:
         self.player = player
         self.banco = banco
         """
-        Constructor de clase Level
+        Constructor de clase Abstracta Level
+
         actions: acciones que puede tomar el Personaje
         info: descripción inicial del escenario
         next: siguiente nivel
@@ -63,11 +66,12 @@ class Level:
         time.sleep(1.5)
     
     def update(self, new_actions: List[str]):
-        i=2
+        """
+        Da un nuevo grupo de decisiones posibles
+        """
+        self.actions=["cambiar arma","ver atributos"]
         for x in new_actions:
-            self.actions[i]=x
-            i+=1
-
+            self.actions.append(x)
     def notificar(self, datos: List[str],pause: float):
         """
         Brinda información al usuario con tiempo para leer
@@ -75,6 +79,13 @@ class Level:
         for x in datos:
             print(x)
             time.sleep(pause)
+    def validar(self):
+        op = input()
+        op = op.lower()
+        while op not in self.actions:
+            print("decision no válida")
+            op = input()
+        return op
 
     def combate(self, j1: Personaje,j2: Personaje):
         turno = 1
@@ -102,17 +113,15 @@ class Level:
 
 class Room1(Level):
 
-    def enter(self):
+    def enter(self,again:bool = False):
         super().enter()
+        print("again ",again)
         onRoom  = True
         while onRoom:
             print(self.actions)
             print("Decision")
-            op = input()
-            op = op.lower()
-            while op not in self.actions:
-                print("decision no válida")
-                op = input()
+
+            op = self.validar()
 
             if op==self.actions[2]:
                 self.notificar(["Una figura en el fondo se acerca","¡Es un orco listo para pelear!"],1.25)
@@ -122,8 +131,7 @@ class Room1(Level):
                     self.notificar(["El Orco sonrie victorioso","Has fallado","Intentando de nuevo..."],1.25)
                     self.enter()
                 else:
-                    #self.update(["revisar cadaver","seguir por tunel"])
-                    pass
+                    self.left_path() 
             elif op==self.actions[0]:
                 self.player.cambiar_arma()
             elif op==self.actions[1]:
@@ -132,12 +140,26 @@ class Room1(Level):
                 self.notificar(["Un troll bloquea una puerta",
                                 "Promete dejarte pasar si respondes correctamente",
                                 "..."],1.25)
-                for x in self.banco:
-                    x.hacer(self.player)
+                self.banco[0].hacer(self.player)
                 print("Mision cumplida")
                 self.player.subir_nivel(5,5,5)
                 onRoom = False
 
+    def left_path(self):
+        self.update(["revisar cadaver","seguir por tunel","volver"])
+        on_left = True
+        while on_left:
+            print(self.actions)
+            op = self.validar()
+            if op == self.actions[4]:
+                self.enter(again = True)
+            elif op== self.actions[2]:
+                self.notificar(["Has hallado una poción","y una nota que dice:"],1)
+                self.actions.remove("revisar cadaver")
+            elif op == self.actions[3]:
+                self.banco[1].hacer(self.player)
+                on_left = False
+        
 class World:
     def __init__(self):
         self.PTR= None
@@ -155,5 +177,5 @@ class World:
             L.enter()
             L = L.next
         print("Ha ganado el juego")
-
+        
 
