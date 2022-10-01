@@ -1,6 +1,6 @@
 from Levels import Pregunta
 a = Pregunta("¿Cuál es un metodo ?",
-                [" vida "," subir_nivel()"," defensa"],1,10) 
+                [" vida "," cambiar_arma()"," defensa"],1,10) 
 
 b = Pregunta("¿Qué expresión se refiere a la clase madre?"
                 ,["parent.()","ultra.()","super.()"],2,10)   
