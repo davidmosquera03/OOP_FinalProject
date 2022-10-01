@@ -3,15 +3,16 @@ from Levels import *
 from Preguntas import *
 
 print("Bienvenido")
-time.sleep(0.5)
-
+print("La tierra está en caos")
+time.sleep(3)
+print("Debemos instanciar un Personaje héroe")
 print("Escribe tu nombre para empezar")
 name = input()
 while len(name)==0:
-    print("El Nombre es necesario")
+    print("El Nombre es un atributo necesario")
     name = input()
 
-print("Ahora selecciona una clase")
+print("Ahora selecciona una sub-clase de Personaje")
 print("(1) Guerrero (2) Mago (3) Arquero")
 op = input()
 n = ["1","2","3"]
@@ -28,6 +29,7 @@ elif op==2:
     p1 = mago(name,10,20,15,80) 
 else:
     p1 = arquero(name, 15,10,15,90) 
+print("Ha sido creado, mira tus atributos")
 p1.atributos()
 
 one = Room1(["izquierda","derecha"], 

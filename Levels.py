@@ -161,10 +161,12 @@ class Room1(Level):
                 enemigo1 = Enemigo("Orco",20,30,10,400)
                 self.notificar(1,"Una figura se acerca...","¡Un orco hambriento!")
                 print("Combate")
+                vida = self.player.vida
                 win = self.combate(self.player,enemigo1)
 
                 if win!=self.player.nombre:
                     self.notificar(1,"El orco te arrastra a la oscuridad...","Intenta de nuevo")
+                    self.player.vida=vida
                     self.enter()
                 else: 
                     self.notificar(1,"El orco cae ante tu poder")
@@ -173,23 +175,26 @@ class Room1(Level):
                 self.left_path()
 
         elif op == self.actions[3]:
+
             self.notificar(0,"Un troll desarmado resguarda una puerta","No te ha visto aun")
             self.update(["atacar","acercarse con cuidado"])
             op = self.validar()
             if op==self.actions[2]:
                 enemigo2 = Enemigo("Guardian",100,20,80,800)
                 self.notificar(0,"Del troll emerge una hacha de fuego","No hay vuelta atrás...")
+                vida = self.player.vida
                 win = self.combate(self.player,enemigo2)
                 if win!=self.player.nombre:
                     self.notificar(1,"Tu magia es aún muy debil","El troll te aplasta")
                     self.update(self.og_actions)
+                    self.player.vida = vida
                     self.enter()
             elif op == self.actions[3]:
-                self.notificar(1,"«El mundo de afuera está en caos»",
-                              "«Si no conoces lo suficiente no podrás pasar »"
-                                ,"« »")
+                self.notificar(1,"«No enfrentes el mundo sin conocimiento»",
+                              "«Puedo por medio de una Pregunta -a- aumentar tu inteligencia...»"
+                                ,"«Cuanto antes aciertes, mayor la recompensa»")
                 self.banco[0].hacer(self.player)
-                self.exit()
+                self.right_path()
             
 
     def left_path(self):
@@ -205,7 +210,7 @@ class Room1(Level):
             self.enter(again=True)
 
     def right_path(self):
-        pass
+        self.exit()
 
 class Room2(Level):
     def enter(self,again:bool = False, exit:bool=False):
