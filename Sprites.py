@@ -1,4 +1,3 @@
-from re import T
 import time
 class Personaje:
 
@@ -72,14 +71,14 @@ class guerrero(Personaje):
     def cambiar_arma(self):
         while True: 
             try:
-                opcion = int(input("Elige un arma: (1) Acero Valkyria, daño +8 defensa +5."+ 
-                                        "(2) Matadragones, daño +10 \n"))
+                opcion = int(input("Elige un arma: (1) Acero Valkyria, espada +8 defensa +5."+ 
+                                        "(2) Matadragones, espada +10 \n"))
                 if opcion == 1:
-                    self.fuerza+=8
+                    self.espada+=8
                     self.defensa+=5
                     break
                 elif opcion ==2:
-                    self.fuerza+=10
+                    self.espada+=10
                     break
                 else:
                     print("Numero no valido")
