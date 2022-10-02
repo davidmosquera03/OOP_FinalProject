@@ -1,6 +1,6 @@
 import time
 class Personaje:
-
+# Esta es una prueba
     def __init__(self, nombre, fuerza, inteligencia,defensa,vida):
         self.nombre = nombre
         self.fuerza = fuerza
