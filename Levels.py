@@ -198,10 +198,13 @@ class Room1(Level):
 
                 
     def left_path(self):
-        self.update(["revisar cadaver","seguir por tunel","volver"])
+        self.update(["revisar cuerpo","seguir por tunel","volver"])
         op = self.validar()
         if op==self.actions[2]:
-            self.notificar(1,"Encuentras una nota")
+            self.notificar(1,"Encuentras una nota:",
+                            "\"los lobos guardianes estan listos en el bosque\"",
+                            "\"el gris es el mas peligroso\"",
+                            "\"cuidado al salir\"")
             self.exit()
         elif op == self.actions[3]:
             self.exit()
@@ -222,7 +225,7 @@ class Room2(Level):
             self.notificar(1,"distingues unos aullidos...","se escuchan pisadas...")
             vida = self.player.vida
             lobo1 = Enemigo("lobo negro",35,10,20,50)
-            lobo2 = Enemigo("lobo gris ",45,10,20,50)
+            lobo2 = Enemigo("lobo gris ",45,10,20,60)
             win = self.combate2(self.player,lobo1,lobo2)
             if win!=self.player.nombre:
                 self.notificar("una jauria de lobos llega para compartir su cena","intenta de nuevo")

@@ -6,7 +6,7 @@ print("Bienvenido")
 print("La tierra está en caos")
 time.sleep(1.5)
 print("Debemos instanciar un Personaje héroe para salvarla")
-print("Necesitamos primero un nombre para empezar:")
+print("Dale un nombre para empezar:")
 name = input()
 while len(name)==0:
     print("nombre es un atributo necesario")
