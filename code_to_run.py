@@ -6,7 +6,7 @@ print("Bienvenido")
 print("La tierra está en caos")
 time.sleep(1.5)
 print("Debemos instanciar un Personaje héroe para salvarla")
-print("Necesitamos primero un nombre para empezar")
+print("Necesitamos primero un nombre para empezar:")
 name = input()
 while len(name)==0:
     print("nombre es un atributo necesario")
@@ -20,7 +20,7 @@ while op not in n:
     print("La situación es urgente. Un héroe de la Superclase Personaje no es suficiente")
     op=input()
 
-print("con |cambiar_arma()| escoge un arma con que empezar")
+print("Con |cambiar arma| escoge un arma con que empezar:")
 op = int(op)
 time.sleep(1)
 if op==1:       #nombre, fuerza, inteligencia, defensa, vida
@@ -31,7 +31,8 @@ else:
     p1 = arquero(name, 15,10,15,90) 
 print("Ha sido creado un Personaje p1 con nombre",p1.nombre,". Mira tus atributos:")
 p1.atributos()
-print("Desde otras dimensiones conocidas como Modulos estamos importando recursos para ti")
+
+print("Desde otras dimensiones conocidas como Modulos estamos importando para el mundo")
 one = Room1(["izquierda","derecha"], 
             "Te encuentras en una cueva oscura, 2 caminos se distinguen",
                  p1, banco1)

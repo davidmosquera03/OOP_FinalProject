@@ -158,7 +158,7 @@ class Room1(Level):
         if op == self.actions[2]:
 
             if(not again):
-                enemigo1 = Enemigo("Orco",20,30,10,400)
+                enemigo1 = Enemigo("Orco",40,30,10,400)
                 self.notificar(1,"Una figura se acerca...","¡Un orco hambriento!")
                 print("Combate")
                 vida = self.player.vida
@@ -181,7 +181,7 @@ class Room1(Level):
             op = self.validar()
             if op==self.actions[2]:
                 enemigo2 = Enemigo("Guardian",100,20,80,800)
-                self.notificar(0,"Del troll emerge una hacha de fuego","No hay vuelta atrás...")
+                self.notificar(0,"Del troll emerge una hacha que emana fuego","No hay vuelta atrás...")
                 vida = self.player.vida
                 win = self.combate(self.player,enemigo2)
                 if win!=self.player.nombre:
@@ -191,12 +191,12 @@ class Room1(Level):
                     self.enter()
             elif op == self.actions[3]:
                 self.notificar(1,"«No enfrentes el mundo sin conocimiento»",
-                              "«Puedo por medio de una Pregunta -a- aumentar tu inteligencia...»"
+                              "«Puedo por medio de una Pregunta aumentar tu inteligencia...»"
                                 ,"«Cuanto antes aciertes, mayor la recompensa»")
                 self.banco[0].hacer(self.player)
                 self.right_path()
-            
 
+                
     def left_path(self):
         self.update(["revisar cadaver","seguir por tunel","volver"])
         op = self.validar()
@@ -219,7 +219,75 @@ class Room2(Level):
             self.notificar(1,"Una bolsa se encuentra junto al fuego")
             self.left_path()
         elif op == self.actions[3]:
-           self.notificar(1,"distingues unos aullidos...","se escuchan pisadas...")
+            self.notificar(1,"distingues unos aullidos...","se escuchan pisadas...")
+            vida = self.player.vida
+            lobo1 = Enemigo("lobo negro",35,10,20,50)
+            lobo2 = Enemigo("lobo gris ",45,10,20,50)
+            win = self.combate2(self.player,lobo1,lobo2)
+            if win!=self.player.nombre:
+                self.notificar("una jauria de lobos llega para compartir su cena","intenta de nuevo")
+                self.player.vida = vida
+                self.enter()
+            else:
+                self.notificar(0.5,"no puedes evitar correr al oir mas lobos en camino"
+                                ,"...")
+                self.right_path()
+    def right_path(self):
+        self.exit()
+
+
+    def combate2(self, j1: Personaje,j2: Personaje,j3: Personaje):
+            """
+            Pelea entre dos personajes
+
+            cada turno se atacan entre si
+            acaba cuando la vida de uno es 0
+            devuelve el nombre del ganador
+            """
+            wait = 0
+            turno = 1
+            ganador = None
+            print(j1.nombre," vs. ",j2.nombre," y ",j3.nombre)
+
+            while j1.esta_vivo() and (j2.esta_vivo() or j3.esta_vivo()):
+                print("\nTurno" , turno )
+                print(f">>>> Accion de {j1.nombre} : ", sep="")
+
+                if j2.esta_vivo() and j3.esta_vivo():
+                    op = input("atacar a (1) "+j2.nombre+" o (2) "+j3.nombre)
+                    while op!="1" and op!="2":
+                        op = input("opcion invalida:")
+                    if op=="1":
+                        j1.atacar(j2)
+                    else:
+                        j1.atacar(j3)
+                elif not j2.esta_vivo():
+                    j1.atacar(j3)
+                elif not j3.esta_vivo():
+                    j1.atacar(j2)
+                time.sleep(wait)
+                if(j2.esta_vivo()):
+                    print(f">>>> Accion de {j2.nombre} : ", sep="")
+                    j2.atacar(j1)
+                    turno += 1
+                    time.sleep(wait)
+                if(j3.esta_vivo()):
+                    print(f">>>> Accion de {j3.nombre} : ", sep="")
+                    j3.atacar(j1)
+                    turno += 1
+                    time.sleep(wait)
+            if j1.esta_vivo():
+                print(f"\nHa ganado: {j1.nombre}")
+                ganador = j1.nombre
+            elif j2.esta_vivo():
+                print(f"\nHa ganado: {j2.nombre} ")
+                ganador = j2.nombre
+            else:
+                print(f"\nHa ganado: {j3.nombre} ")
+                ganador = j3.nombre
+
+            return ganador    
+
 
     def left_path(self):
         self.exit()
