@@ -179,6 +179,7 @@ class Room1(Level):
 
 class Room2(Level):
     def enter(self,again:bool = False, exit:bool=False):
+        print(self.info)
         op = self.validar()
         if op == self.actions[2]:
             self.notificar(1,"Una bolsa se encuentra junto al fuego")
@@ -197,6 +198,8 @@ class Room2(Level):
                 self.notificar(0.5,"no puedes evitar correr al oir mas lobos en camino"
                                 ,"...")
                 self.right_path()
+    def left_path(self):
+        self.exit()
     def right_path(self):
         self.exit()
 
