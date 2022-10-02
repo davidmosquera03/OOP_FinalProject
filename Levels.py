@@ -167,7 +167,7 @@ class Room1(Level):
                             "\"los lobos guardianes estan listos en el bosque\"",
                             "\"el gris es el mas peligroso\"",
                             "\"cuidado al salir\"")
-            self.exit()
+            self.left_path()
         elif op == self.actions[3]:
             self.exit()
         elif op == self.actions[4]:
@@ -182,7 +182,8 @@ class Room2(Level):
         print(self.info)
         op = self.validar()
         if op == self.actions[2]:
-            self.notificar(1,"Una bolsa se encuentra junto al fuego")
+            self.notificar(1,"Un viejo encapuchado duerme junto al fuego",
+                            "una bolsa de viaje reposa a sus pies")
             self.left_path()
         elif op == self.actions[3]:
             self.notificar(1,"distingues unos aullidos...","se escuchan pisadas...")
