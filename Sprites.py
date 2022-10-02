@@ -1,6 +1,6 @@
 import time
 class Personaje:
-
+#Mary1
 
     def __init__(self, nombre, fuerza, inteligencia,defensa,vida):
         self.nombre = nombre
