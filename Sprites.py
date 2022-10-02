@@ -74,7 +74,7 @@ class guerrero(Personaje):
                 opcion = int(input("Elige un arma: (1) Acero Valkyria, espada +8 defensa +5."+ 
                                         "(2) Matadragones, espada +10 \n"))
                 if opcion == 1:
-                    self.espada+=8
+                    self.espada +=8
                     self.defensa+=5
                     break
                 elif opcion ==2:
