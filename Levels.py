@@ -1,6 +1,4 @@
 from typing import List
-from tkinter import *
-from PIL import ImageTk, Image
 from Sprites import *
 import time
 import abc

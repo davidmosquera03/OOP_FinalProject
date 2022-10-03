@@ -39,10 +39,10 @@ class Pregunta:
         return f"{self.enunciado}"
 
 a = Pregunta("¿Cuál es un metodo?",
-                [" vida "," curar()"," defensa"],1,10) 
+                [" vida "," curar()"," defensa"],1,5) 
 
 b = Pregunta("¿Qué expresión se refiere a la clase madre?"
-                ,["parent.()","ultra.()","super.()"],2,10)   
+                ,["parent.()","ultra.()","super.()"],2,5)   
 
 c = Pregunta("Cual es mejor para encapsular",
             ["Herencia","Composición"],1,2)
