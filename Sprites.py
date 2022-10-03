@@ -49,15 +49,6 @@ class Personaje:
         else:
             enemigo.morir()
                     
-    ##get y set 
-    def get_fuerza(self):
-        return self.fuerza
-
-    def set_fuerza(self, fuerza):
-        if fuerza < 0:
-            print("Error, has introducido un valor negativo")
-        else:
-            self.fuerza = fuerza
     def cambiar_arma(self):
         pass
   
