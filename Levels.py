@@ -87,7 +87,7 @@ class Level(abc.ABC):
         acaba cuando la vida de uno es 0
         devuelve el nombre del ganador
         """
-        wait = 0
+        wait = 2
         turno = 1
         ganador = None
         print(j1.nombre," vs. ",j2.nombre)
@@ -136,12 +136,12 @@ class Room1(Level):
 
         elif op == self.actions[3]:
 
-            self.notificar(0,"Un troll desarmado resguarda una puerta","No te ha visto aun")
+            self.notificar(1.5,"Un troll desarmado resguarda una puerta","No te ha visto aun")
             self.update(["atacar","acercarse con cuidado"])
             op = self.validar()
             if op==self.actions[2]:
                 enemigo2 = Enemigo("Guardian",100,20,80,800)
-                self.notificar(0,"Del troll emerge una hacha que emana fuego","No hay vuelta atrás...")
+                self.notificar(1,"Del troll emerge una hacha que emana fuego","No hay vuelta atrás...")
                 vida = self.player.vida
                 win = self.combate(self.player,enemigo2)
                 if win!=self.player.nombre:
@@ -151,7 +151,7 @@ class Room1(Level):
                     self.enter()
             elif op == self.actions[3]:
                 if not again1: 
-                    self.notificar(1,"«No enfrentes el mundo sin conocimiento»",
+                    self.notificar(1.5,"«No enfrentes el mundo sin conocimiento»",
                                 "«Puedo por medio de una Pregunta aumentar tu inteligencia...»"
                                     ,"«Cuanto antes aciertes, mayor la recompensa»")
                     self.banco[0].hacer(self.player)
@@ -168,7 +168,7 @@ class Room1(Level):
         self.update(["revisar cuerpo","seguir por tunel","volver"])
         op = self.validar()
         if op==self.actions[2]:
-            self.notificar(1,"Encuentras una nota:",
+            self.notificar(1.5,"Encuentras una nota:",
                             "\"los lobos guardianes estan listos en el bosque\"",
                             "\"el gris es el mas peligroso\"",
                             "\"cuidado al salir\"")
@@ -202,7 +202,7 @@ class Room2(Level):
                 self.player.vida = vida
                 self.enter()
             else:
-                self.notificar(0.5,"no puedes evitar correr al oir mas lobos en camino"
+                self.notificar(1,"no puedes evitar correr al oir mas lobos en camino"
                                 ,"...")
                 self.right_path()
     def left_path(self):
@@ -219,7 +219,7 @@ class Room2(Level):
             acaba cuando la vida de uno es 0
             devuelve el nombre del ganador
             """
-            wait = 0
+            wait = 2
             turno = 1
             ganador = None
             print(j1.nombre," vs. ",j2.nombre," y ",j3.nombre)
