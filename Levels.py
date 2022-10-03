@@ -114,7 +114,7 @@ class Level(abc.ABC):
         return ganador
 
 class Room1(Level):
-    def enter(self,again:bool = False):
+    def enter(self,again:bool = False, again1:bool=False):
         print(self.info)
         op = self.validar()
         if op == self.actions[2]:
@@ -152,11 +152,18 @@ class Room1(Level):
                     self.player.vida = vida
                     self.enter()
             elif op == self.actions[3]:
-                self.notificar(1,"«No enfrentes el mundo sin conocimiento»",
-                              "«Puedo por medio de una Pregunta aumentar tu inteligencia...»"
-                                ,"«Cuanto antes aciertes, mayor la recompensa»")
-                self.banco[0].hacer(self.player)
-                self.right_path()
+                if not again1: 
+                    self.notificar(1,"«No enfrentes el mundo sin conocimiento»",
+                                "«Puedo por medio de una Pregunta aumentar tu inteligencia...»"
+                                    ,"«Cuanto antes aciertes, mayor la recompensa»")
+                    self.banco[0].hacer(self.player)
+                self.update(["seguir adelante","volver"])
+                op = self.validar()
+                if op==self.actions[2]:
+                    self.right_path()
+                elif op==self.actions[3]:
+                    self.update(self.og_actions)
+                    self.enter(again1=True)
 
                 
     def left_path(self):
@@ -180,6 +187,7 @@ class Room1(Level):
 class Room2(Level):
     def enter(self,again:bool = False, exit:bool=False):
         print(self.info)
+        time.sleep(1)
         op = self.validar()
         if op == self.actions[2]:
             self.notificar(1,"Un viejo encapuchado duerme junto al fuego",
