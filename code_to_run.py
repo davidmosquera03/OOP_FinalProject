@@ -20,7 +20,7 @@ while op not in n:
     print("La situación es urgente. Un héroe de la Superclase Personaje no es suficiente")
     op=input()
 
-print("Con |cambiar arma| escoge un arma con que empezar:")
+print("Escoge un arma con que empezar:")
 op = int(op)
 time.sleep(1)
 if op==1:       #nombre, fuerza, inteligencia, defensa, vida

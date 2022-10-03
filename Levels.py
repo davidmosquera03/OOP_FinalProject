@@ -9,7 +9,7 @@ from Preguntas import Pregunta
 class Level(abc.ABC):
     def __init__(self, actions : List, info : str, player: Personaje, banco: List[Pregunta]) -> None:
         self.og_actions = actions
-        self.actions=["cambiar arma","ver atributos"]
+        self.actions=["usar pocion","ver atributos"]
         self.actions.extend(actions)
 
         self.info = info
@@ -35,7 +35,7 @@ class Level(abc.ABC):
         """
         Da un nuevo grupo de decisiones posibles
         """
-        self.actions=["cambiar arma","ver atributos"]
+        self.actions=["usar pocion","ver atributos"]
         for x in new_actions:
             self.actions.append(x)
 
@@ -53,7 +53,7 @@ class Level(abc.ABC):
         valida si esta en lista de acciones
 
         mantiene en ciclo para acciones basicas:
-        - cambiar arma
+        -usar pocion
         - ver atributos 
         """
         on = True
@@ -65,7 +65,7 @@ class Level(abc.ABC):
                 print("decision no válida")
                 op = input()
             if op == self.actions[0]:
-                self.player.cambiar_arma()
+                self.player.curar()
             elif op == self.actions[1]:
                 self.player.atributos()
             else:

@@ -38,8 +38,8 @@ class Pregunta:
     def __repr__(self) -> str:
         return f"{self.enunciado}"
 
-a = Pregunta("¿Cuál es un metodo ?",
-                [" vida "," cambiar_arma()"," defensa"],1,10) 
+a = Pregunta("¿Cuál es un metodo?",
+                [" vida "," curar()"," defensa"],1,10) 
 
 b = Pregunta("¿Qué expresión se refiere a la clase madre?"
                 ,["parent.()","ultra.()","super.()"],2,10)   

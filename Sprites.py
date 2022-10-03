@@ -1,4 +1,6 @@
 import time
+
+
 class Personaje:
 
     def __init__(self, nombre, fuerza, inteligencia,defensa,vida):
@@ -8,6 +10,7 @@ class Personaje:
         self.defensa = defensa
         self.vida = vida 
         self.nivel = 1 
+        self.potions = 2
     
     def atributos(self):
         print(self.nombre, " : " ,)
@@ -49,8 +52,13 @@ class Personaje:
         else:
             enemigo.morir()
                     
-    def cambiar_arma(self):
-        pass
+    def curar(self):
+        if self.potions>0:
+            self.potions-=1
+            self.vida+=10
+            print("tu vida es ahora ",self.vida)
+        else:
+            print("No hay pociones")
   
 ##PARTE DE HERENCIA
 class guerrero(Personaje):
