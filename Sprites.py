@@ -61,7 +61,7 @@ class Personaje:
             print("No hay pociones")
   
 ##PARTE DE HERENCIA
-class guerrero(Personaje):
+class Guerrero(Personaje):
     def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.espada = 1
@@ -98,7 +98,7 @@ class guerrero(Personaje):
             return 0
         
 
-class mago(Personaje):
+class Mago(Personaje):
     def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)  
         self.libro = 1
@@ -132,7 +132,7 @@ class mago(Personaje):
         else:
             return 0
         
-class arquero(Personaje):
+class Arquero(Personaje):
     def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.critico = 1

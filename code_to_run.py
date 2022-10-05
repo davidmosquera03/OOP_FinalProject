@@ -1,11 +1,12 @@
-from Sprites import *
-from Levels import *
-from Preguntas import *
+from Sprites import Personaje,Guerrero,Mago,Arquero
+from Levels import Room1,Room2,World
+from Preguntas import banco1,c
+import time
 
 print("Bienvenido")
-print("La tierra está en caos")
+print("La tierra está en caos, el Gran Tirano ha tomado control")
 time.sleep(1.5)
-print("Debemos instanciar un Personaje héroe para salvarla")
+print("Debemos instanciar un Personaje héroe capaz de crear un Dragón para derrotarlo")
 print("Dale un nombre para empezar:")
 name = input()
 while len(name)==0:
@@ -24,15 +25,15 @@ print("Escoge un arma con que empezar:")
 op = int(op)
 time.sleep(1)
 if op==1:       #nombre, fuerza, inteligencia, defensa, vida
-    p1 = guerrero(name,25,5,20,100) 
+    p1 = Guerrero(name,25,5,20,100) 
 elif op==2:
-    p1 = mago(name,10,20,15,80) 
+    p1 = Mago(name,10,20,15,80) 
 else:
-    p1 = arquero(name, 15,10,15,90) 
+    p1 = Arquero(name, 15,10,15,90) 
 print("Ha sido creado un Personaje p1 con nombre",p1.nombre,". Mira tus atributos:")
 p1.atributos()
 time.sleep(2)
-print("Desde otras dimensiones conocidas como Modulos estamos importando para el mundo")
+print("Desde otras dimensiones conocidas como Modulos estamos importando recursos para el mundo")
 one = Room1(["izquierda","derecha"], 
             "Te encuentras en una cueva oscura, 2 caminos se distinguen",
                  p1, banco1)

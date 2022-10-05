@@ -1,20 +1,11 @@
 from typing import List
-from Sprites import *
+from Sprites import Personaje,Enemigo
 import time
 import abc
 from Preguntas import Pregunta
 
 class Level(abc.ABC):
-    def __init__(self, actions : List, info : str, player: Personaje, banco: List[Pregunta]) -> None:
-        self.og_actions = actions
-        self.actions=["usar pocion","ver atributos"]
-        self.actions.extend(actions)
-
-        self.info = info
-        self.next = None
-
-        self.player = player
-        self.banco = banco
+    def __init__(self, actions : List[str], info : str, player: Personaje, banco: List[Pregunta]) -> None:
         """
         Constructor de clase Abstracta Level
 
@@ -24,8 +15,21 @@ class Level(abc.ABC):
         player: Personaje en el nivel
         banco: Banco de preguntas disponibles en el nivel
         """
+        self.og_actions = actions
+        self.actions=["usar pocion","ver atributos"]
+        self.actions.extend(actions)
+
+        self.info = info
+        self.next = None
+
+        self.player = player
+        self.banco = banco
+       
     @abc.abstractmethod
     def enter(self):
+        """
+        Eventos iniciales en un nivel
+        """
         ...
     
 

@@ -41,10 +41,17 @@ class Pregunta:
 a = Pregunta("¿Cuál es un metodo?",
                 [" vida "," curar()"," defensa"],1,5) 
 
-b = Pregunta("¿Qué expresión se refiere a la clase madre?"
+b = Pregunta("¿Cuál es un atributo ?",
+                [" fuerza "," atacar() "," subir_nivel()"],0,5)
+
+
+
+x = Pregunta("¿Qué expresión se refiere a la clase madre?"
                 ,["parent.()","ultra.()","super.()"],2,5)   
 
-c = Pregunta("Cual es mejor para encapsular",
+d = Pregunta("Cual es mejor para encapsular",
             ["Herencia","Composición"],1,2)
 
-banco1 =[a,b]
+banco1 =[a,b] # Abstracción
+banco2 = [d]  # Encapsulación
+banco3=[]     # Herencia y Polimorfismo
