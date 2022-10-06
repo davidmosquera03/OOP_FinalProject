@@ -44,8 +44,6 @@ a = Pregunta("¿Cuál es un metodo?",
 b = Pregunta("¿Cuál es un atributo ?",
                 [" fuerza "," atacar() "," subir_nivel()"],0,5)
 
-
-
 x = Pregunta("¿Qué expresión se refiere a la clase madre?"
                 ,["parent.()","ultra.()","super.()"],2,5)   
 

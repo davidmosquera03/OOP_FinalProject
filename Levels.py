@@ -78,6 +78,7 @@ class Level(abc.ABC):
         """
         Entrar al siguiente nivel en el Mundo
         """
+        self.player.subir_nivel(2,2,2)
         if(self.next is not None):
             self.next.enter()
         else: 
@@ -168,7 +169,8 @@ class Room1(Level):
                     self.enter(again1=True)
 
                 
-    def left_path(self):
+    def left_path(self,again=False):
+        self.notificar(0,"Una salida de la cueva se ve por el tunel")
         self.update(["revisar cuerpo","seguir por tunel","volver"])
         op = self.validar()
         if op==self.actions[2]:
@@ -176,7 +178,10 @@ class Room1(Level):
                             "\"los lobos guardianes estan listos en el bosque\"",
                             "\"el gris es el mas peligroso\"",
                             "\"cuidado al salir\"")
-            self.left_path()
+            if not again:
+                self.player.potions+=1
+                self.notificar(1,"¡Has hallado una poción!","cantidad actual:",self.player.potions)
+            self.left_path(again = True)
         elif op == self.actions[3]:
             self.exit()
         elif op == self.actions[4]:

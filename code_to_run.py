@@ -1,6 +1,6 @@
 from Sprites import Personaje,Guerrero,Mago,Arquero
 from Levels import Room1,Room2,World
-from Preguntas import banco1,c
+from Preguntas import banco1,banco2
 import time
 
 print("Bienvenido")
@@ -40,7 +40,7 @@ one = Room1(["izquierda","derecha"],
 
 dos = Room2(["buscar fogata", "seguir adelante"],
             "Te encuentras enfrente de un bosque tupido y oscuro,una fogata se ve en el fondo"
-            ,p1,c)
+            ,p1,banco2)
 
 mundo = World()
 mundo.add_level(one)

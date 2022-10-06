@@ -57,6 +57,7 @@ class Personaje:
             self.potions-=1
             self.vida+=10
             print("tu vida es ahora ",self.vida)
+            print("Pociones restantes: ",self.potions)
         else:
             print("No hay pociones")
   
@@ -142,13 +143,13 @@ class Arquero(Personaje):
          while True: 
             try:
                 opcion = int(input("Elige un arma: (1) Arco Ionico, critico +8 vida +5."+
-                                             "(2) Matacraquens , critico +19\n "))
+                                             "(2) MataKrakens , critico +12\n "))
                 if opcion == 1:
-                    self.critico = 8
+                    self.critico += 8
                     self.vida+=5
                     break
                 elif opcion ==2:
-                    self.critico = 19
+                    self.critico += 12
                     break
                 else:
                     print("Numero no valido")
