@@ -16,7 +16,7 @@ class Level(abc.ABC):
         banco: Banco de preguntas disponibles en el nivel
         """
         self.og_actions = actions
-        self.actions=["usar pocion","ver atributos"]
+        self.actions=["usar poción","ver atributos"]
         self.actions.extend(actions)
 
         self.info = info
@@ -37,7 +37,7 @@ class Level(abc.ABC):
         """
         Da un nuevo grupo de decisiones posibles
         """
-        self.actions=["usar pocion","ver atributos"]
+        self.actions=["usar poción","ver atributos"]
         for x in new_actions:
             self.actions.append(x)
 
@@ -162,18 +162,18 @@ class Room1(Level):
                     self.banco[0].hacer(self.player)
                 self.update(["seguir adelante","volver"])
                 op = self.validar()
-                if op==self.actions[2]:
+                if op==self.actions[2]: # Seguir adelante
                     self.right_path()
-                elif op==self.actions[3]:
+                elif op==self.actions[3]: # Volver
                     self.update(self.og_actions)
-                    self.enter(again1=True)
+                    self.enter(again=True,again1=True)
 
                 
-    def left_path(self,again=False):
+    def left_path(self,again=False,again1= False):
         self.notificar(0,"Una salida de la cueva se ve por el tunel")
-        self.update(["revisar cuerpo","seguir por tunel","volver"])
+        self.update(["revisar cuerpo","seguir por tunel","volver", "examinar muros"])
         op = self.validar()
-        if op==self.actions[2]:
+        if op==self.actions[2]: # Revisar cuerpo
             self.notificar(1.5,"Encuentras una nota:",
                             "\"los lobos guardianes estan listos en el bosque\"",
                             "\"el gris es el mas peligroso\"",
@@ -182,12 +182,23 @@ class Room1(Level):
                 self.player.potions+=1
                 self.notificar(1,"¡Has hallado una poción!","cantidad actual:",self.player.potions)
             self.left_path(again = True)
-        elif op == self.actions[3]:
+        elif op == self.actions[3]: # seguir por tunel
             self.exit()
-        elif op == self.actions[4]:
+        elif op == self.actions[4]: # Volver
             self.update(self.og_actions)
             self.enter(again=True)
-
+        elif op == self.actions[5]: # Muros
+            self.notificar(1.5,"Dibujos grabados en la pared:"
+                            ,"un dragón en el aire incendia un castillo",
+                             "notas runas antiguas...")
+            if not again1:
+                if self.player.inteligencia>=10:
+                    self.notificar(1.5,"tu inteligencia permite leerlas",
+                                    "\"Abstractio, Encapsulation, Hereditas, Polymorphismus\"",
+                                    "\"Domina los principios y controlarás los objetos\"")
+                else:
+                    self.notificar(2,"No logras descifrar su significado")
+            self.left_path(again1=True)
     def right_path(self):
         self.exit()
 
@@ -214,11 +225,14 @@ class Room2(Level):
                 self.notificar(1,"no puedes evitar correr al oir mas lobos en camino"
                                 ,"...")
                 self.right_path()
+                
     def left_path(self):
         self.exit()
     def right_path(self):
+        self.notificar(1.5,"Agotado, llegas a una cabaña y cierras la puerta",
+                        "los lobos esperan afuera hambrientos")
+        self.update(["levantar estante"])
         self.exit()
-
 
     def combate2(self, j1: Personaje,j2: Personaje,j3: Personaje):
             """
@@ -272,12 +286,6 @@ class Room2(Level):
 
             return ganador    
 
-
-    def left_path(self):
-        self.exit()
-
-    def right_path(self):
-        self.exit()
         
 class World:
     def __init__(self):
