@@ -118,12 +118,17 @@ class Level(abc.ABC):
         return ganador
 
 class Room1(Level):
-    def enter(self,again:bool = False, again1:bool=False):
+    defeat = False # Derrotar orco
+    potion = False  # Hallar poción
+    askedr = False  # Pregunta izquierda
+    askedl = False  # Pregunta derecha
+    # Booleanos para registrar avances en nivel
+    def enter(self):
         print(self.info)
         op = self.validar()
         if op == self.actions[2]:
 
-            if(not again):
+            if(not self.defeat):
                 enemigo1 = Enemigo("Orco",40,30,10,400)
                 self.notificar(0,"Una figura se acerca...","¡Un orco hambriento!")
                 print("Combate")
@@ -135,6 +140,7 @@ class Room1(Level):
                     self.player.vida=vida
                     self.enter()
                 else: 
+                    self.defeat = True
                     self.notificar(1,"El orco cae ante tu poder")
                     self.left_path()
             else:
@@ -157,7 +163,8 @@ class Room1(Level):
                     self.enter()
             elif op == self.actions[3]:
 
-                if not again1: 
+                if not self.askedr:
+                    self.askedr = True 
                     self.notificar(0,"«No enfrentes el mundo sin conocimiento»",
                                 "«Puedo por medio de una Pregunta aumentar tu inteligencia...»"
                                     ,"«Cuanto antes aciertes, mayor la recompensa»")
@@ -170,10 +177,10 @@ class Room1(Level):
 
                 elif op==self.actions[3]: # Volver
                     self.update(self.og_actions)
-                    self.enter(again=True,again1=True)
+                    self.enter()
 
                 
-    def left_path(self,again=False,again1= False, ag=False):
+    def left_path(self):
         self.notificar(0,"Una salida de la cueva se ve por el tunel")
         self.update(["revisar cuerpo","seguir","volver", "examinar muros"])
         op = self.validar()
@@ -183,35 +190,34 @@ class Room1(Level):
                             "\"los lobos guardianes estan listos en el bosque\"",
                             "\"el gris es el mas peligroso\"",
                             "\"cuidado al salir\"")
-            if not again:
+            if not self.potion:
+                self.potion = True
                 self.player.potions+=1
                 self.notificar(0,"¡Has hallado una poción!","cantidad actual:",self.player.potions)
-            self.left_path(again = True)
+            self.left_path()
 
         elif op == self.actions[3]: # seguir
             self.exit()
 
         elif op == self.actions[4]: # Volver
             self.update(self.og_actions)
-            if not ag:
-                self.enter(again=True)
-            else:
-                self.enter(again=True,again1=True)
+            self.enter()
 
         elif op == self.actions[5]: # Muros
             self.notificar(0,"Dibujos grabados en la pared:"
                             ,"un dragón en el aire incendia un castillo",
                              "notas runas antiguas...")
-            if not again1:
+            if not self.askedl:
                 if self.player.inteligencia>=10:
                     self.notificar(0,"tu inteligencia permite leerlas",
                                     "\"Abstractio, Encapsulation, Hereditas, Polymorphismus\"",
                                     "\"Domina los principios y controlarás los objetos\"")
                 else:
                     self.notificar(0,"No logras descifrar su significado")
+                self.askedl = True
                 self.notificar(0,"Tu presencia activa las runas...")
                 self.banco[2].hacer(self.player)
-            self.left_path(again1=True)
+            self.left_path()
 
     def right_path(self,again = False):
         self.notificar(0,"Ante ti ahi un lago profundo",
@@ -228,8 +234,8 @@ class Room1(Level):
 
         elif op == self.actions[3]:
                 serpiente = Enemigo("Serpiente marina",50,10,30,400)
-                win = self.combate(self.player,serpiente)
                 vida = self.player.vida
+                win = self.combate(self.player,serpiente)
                 if win!=self.player.nombre:
                     self.notificar(1,"Tu magia es aún muy debil","El troll te aplasta")
                     self.update(self.og_actions)
@@ -251,36 +257,46 @@ class Room1(Level):
             
 
 class Room2(Level):
-    def enter(self,again:bool = False):
-        print(self.info)
-        time.sleep(1)
-        op = self.validar()
+    asked = False
+    def enter(self,again:bool = False, alt = False):
+        if not alt:
+            print(self.info)
+            time.sleep(1)
+            op = self.validar()
+        else:
+            op = self.actions[2]
+
         if op == self.actions[2]:
             self.notificar(1,"un hombre encapuchado reposa junto al fuego")
             self.notificar(0,"\"te he estado esperando\"",
                             "\"acompañame y te enseño a defenderte para llegar al castillo\"")
-            self.update(["Aceptar","Negarse"])
+            self.update(["aceptar","negarse"])
             op = self.validar()
             if op == self.actions[2]:
                 self.notificar(1.75,"Con un movimiento rapido desaparecen...","se encuentran en una guarida")
                 self.left_path()
             elif op == self.actions[3]:
-                self.notificar(0,"\"De acuerdo, respeto tu decisión\"",
-                                    "\"Sin embargo, cuidate de las gargolas en camino...\"")
-                g = Enemigo("gargola",30,10,60,800)
-                win = self.combate(self.player,g)
-                if win!=self.player.name:
+                self.notificar(0,"\"De acuerdo, respeto tu decisión y me iré\"",
+                                    "\"Sin embargo, cuidate de las gárgolas en camino...\""
+                                    ,"poco despues su ida, notas dos figuras en vuelo sobre ti...")
+                g = Enemigo("Gárgola dorada",40,20,60,800)
+                g2 = Enemigo("Gárgola plateada",30,10,50,700)
+                vida = self.player.vida
+                win = self.combate2(self.player,g,g2)
+                if win!=self.player.nombre:
+                    self.update(self.og_actions)
+                    self.player.vida = vida
+                    self.notificar(0,"Te derrotan")
                     self.enter()
                 else:
-                    self.notificar(0,"Una gema es extraida de la gargola")
+                    self.notificar(0,"Una gema es extraida de la gargola dorada")
                     if self.player.inteligencia>=15:
-                        self.notificar(0,"xxx")
+                        self.notificar(0,"Rompes la encapsulación de la clase Enemigo",
+                                    "logras reducir a 0 la vida de los enemigos restantes sin combate")
                     else:
-                        self.notificar(1,"pero no captas su poder")
-                    
-
+                        self.notificar(1,"pero no captas su poder",
+                        "está amaneciendo y vez el castillo en el fondo...")
                 
-
         elif op == self.actions[3]:
             self.notificar(1,"distingues unos aullidos...","se escuchan pisadas...")
             vida = self.player.vida
@@ -288,7 +304,7 @@ class Room2(Level):
             lobo2 = Enemigo("lobo gris ",45,10,20,60)
             win = self.combate2(self.player,lobo1,lobo2)
             if win!=self.player.nombre:
-                self.notificar("una jauria de lobos llega para compartir su cena","intenta de nuevo")
+                self.notificar(1,"una jauría de lobos llega para compartir su cena","intenta de nuevo")
                 self.player.vida = vida
                 self.enter()
             else:
@@ -303,14 +319,15 @@ class Room2(Level):
         if alt:
             self.notificar(0,"Un hechichero te recibe en su guarida",
                              "\"No esperaba encontrarte aun\"","\"Bienvenido\"")
-        
+        if self.player.vida<=50:
+            self.player.potions+=2
+            self.notificar(0,"Ante tus heridas recibes 2 pociones","cantidad actual:",self.player.potions)
         self.exit()
 
-    def right_path(self,again= False):
-        
+    def right_path(self):
         self.update(["levantar librero","atacar desde ventana"])
 
-        if not again:
+        if not self.asked:
             self.actions.append("revisar libro")
         op = self.validar()
 
@@ -328,22 +345,23 @@ class Room2(Level):
                 self.notificar(1,"los lobos son derribados por tus flechas",
                                 "los restantes huyen asustados",
                                 "corres a la fogata... ")
-                self.left_path()
+                self.enter(alt=True)
             else:
                 self.notificar(1,"tu rango es insuficiente")
                 self.right_path()
 
-        elif not again and op == self.actions[4]:
+        elif not self.asked and op == self.actions[4]:
             self.notificar(0,"El libro está desgastado pero conserva todavia poder",
                             "\"Encapsulation: Guarda a atributos y métodos en clases\"",
                              "\"limita el accesso de las otras clases a ella\"")
+            self.asked = True
             self.banco[0].hacer(self.player)
             if isinstance(self.player,Mago):
                 self.notificar(2,"notas un espejo mágico con tu inteligencia",
                                 "entras antes de que los lobos destrozen la puerta...")
-                self.left_path()
+                self.left_path(alt=True)
             else:
-                self.right_path(again=True)
+                self.right_path()
 
     def combate2(self, j1: Personaje,j2: Personaje,j3: Personaje):
             """
