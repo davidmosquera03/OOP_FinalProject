@@ -32,7 +32,7 @@ else:
     p1 = Arquero(name, 15,10,15,90) 
 print("Ha sido creado un Personaje p1 con nombre",p1.nombre,". Mira tus atributos:")
 p1.atributos()
-time.sleep(2)
+time.sleep(1)
 print("Desde otras dimensiones conocidas como Modulos estamos importando recursos para el mundo")
 one = Room1(["izquierda","derecha"], 
             "Te encuentras en una cueva oscura, 2 caminos se distinguen",

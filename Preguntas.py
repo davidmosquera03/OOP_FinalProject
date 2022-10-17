@@ -44,12 +44,19 @@ a = Pregunta("¿Cuál es un metodo?",
 b = Pregunta("¿Cuál es un atributo ?",
                 [" fuerza "," atacar() "," subir_nivel()"],0,5)
 
+c = Pregunta("¿Cuál es una clase?",
+            ["Pregunta","inteligencia","morir()"],0,2)
+
+d = Pregunta("¿Qué debería hacer una interfaz con encapsulación adecuada?",
+            ["permitir que cada clase accedan a totalmente a las otras",
+            "limitar la interacción en lo necesario"],1,2)
+            
+e = Pregunta("¿Cual contiene al otro?",
+            ["Modulos","Paquetes"],0,1)  
+
 x = Pregunta("¿Qué expresión se refiere a la clase madre?"
-                ,["parent.()","ultra.()","super.()"],2,5)   
-
-d = Pregunta("Cual es mejor para encapsular",
-            ["Herencia","Composición"],1,2)
-
-banco1 =[a,b] # Abstracción
-banco2 = [d]  # Encapsulación
+                ,["parent.()","ultra.()","super.()"],2,2) 
+                
+banco1 =[a,b,c] # Abstracción
+banco2 = [d,e]  # Encapsulación
 banco3=[]     # Herencia y Polimorfismo
