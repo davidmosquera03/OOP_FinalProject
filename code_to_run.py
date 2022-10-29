@@ -41,8 +41,7 @@ one = Room1(["izquierda","derecha"],
 dos = Room2(["buscar fogata", "seguir adelante"],
             "Te encuentras enfrente de un bosque tupido y oscuro,una fogata se ve en el fondo"
             ,p1,banco2)
-tres = Room3(["rodear","saltar"],"El castillo con sus torres emerge imponente en la cima de una colina,\
-                lo rodea un foso y no hay puentes a la puerta",p1,banco3)
+tres = Room3(["rodear","saltar"],"El castillo está rodeado por un foso inundado sin puente",p1,banco3)
 
 mundo = World()
 mundo.add_level(one)

@@ -54,6 +54,7 @@ d = Pregunta("¿Qué debería hacer una interfaz con encapsulación adecuada?",
 e = Pregunta("¿Cual contiene al otro?",
             ["Modulos","Paquetes"],1,1)  
 
+
 f = Pregunta("¿Cúal declaración de herencia es correcta?",\
             ["class ConcreteHouse(abc.ABC)","class Felino(Lince)",\
             "class Lince(Felino)"],2,3)

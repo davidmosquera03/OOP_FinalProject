@@ -137,6 +137,7 @@ class Arquero(Personaje):
     def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.critico = 1
+        self.gancho = False
         self.cambiar_arma()
     
     def cambiar_arma(self):
