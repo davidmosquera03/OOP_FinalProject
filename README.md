@@ -1,6 +1,6 @@
 # OOP_FinalProject
-
-## Tipos de Personaje
+![Imagen](img//cover.jpg)
+## **Tipos de Personaje**
 ### Guerrero 
 * Fuerza: 25
 * Inteligencia: 5

@@ -205,7 +205,9 @@ class Room1(Level):
 
         elif op == self.actions[5]: # Muros
             self.notificar(0,"Dibujos grabados en la pared:"
-                            ,"un dragón en el aire incendia un castillo",
+                            ,"de un templo emerge un dragón"
+                            ,"Una frase debajo: Ex Nihilo Ecclesia"
+                            ,"El dragón incendia y derriba una torre",
                              "notas runas antiguas...")
             if not self.askedl:
                 if self.player.inteligencia>=10:
@@ -220,8 +222,8 @@ class Room1(Level):
             self.left_path()
 
     def right_path(self,again = False):
-        self.notificar(0,"Ante ti ahi un lago profundo",
-                        "otro toll cuida la salida al otro lado")
+        self.notificar(0,"Ante ti hay un lago profundo",
+                        "otro troll cuida la salida al otro lado")
         self.update(["revisar arriba","saltar"])
 
         if again:
@@ -246,8 +248,10 @@ class Room1(Level):
                     self.banco[1].hacer(self.player)
                     
 
-        elif again and op==self.actions[4]:
+        elif again and op==self.actions[4]: # Usar cuerda
             self.notificar(0,"Llegas a salvo junto al troll")
+            if isinstance(self.player,Arquero): # Añadir habilidad?
+                pass
             self.banco[1].hacer(self.player)
 
         self.notificar(0,"\"Puedo hablarte del primer secreto\"",
@@ -269,7 +273,7 @@ class Room2(Level):
         if op == self.actions[2]:
             self.notificar(1,"un hombre encapuchado reposa junto al fuego")
             self.notificar(0,"\"te he estado esperando\"",
-                            "\"acompañame y te enseño a defenderte para llegar al castillo\"")
+                            "\"acompañame y te guio en crear el Dragón y llegar al castillo\"")
             self.update(["aceptar","negarse"])
             op = self.validar()
             if op == self.actions[2]:
@@ -289,13 +293,16 @@ class Room2(Level):
                     self.notificar(0,"Te derrotan")
                     self.enter()
                 else:
-                    self.notificar(0,"Una gema es extraida de la gargola dorada")
+                    self.notificar(0,"Una gema es extraida de la Gárgola dorada","Más Gárgolas se acercan...")
                     if self.player.inteligencia>=15:
-                        self.notificar(0,"Rompes la encapsulación de la clase Enemigo",
-                                    "logras reducir a 0 la vida de los enemigos restantes sin combate")
+                        self.notificar(0,"Detecas la información que almacena",\
+                                        "¡Rompes la encapsulación de las Gárgolas",
+                                       "logras reducir a 0 el atributo vida de los enemigos restantes sin combate")
                     else:
                         self.notificar(1,"pero no captas su poder",
-                        "está amaneciendo y vez el castillo en el fondo...")
+                                        "te mueves escondiendote de los restantes")
+                    self.notificar(0,"avanzas adelante","ya se ve el castillo...")
+                    self.exit()
                 
         elif op == self.actions[3]:
             self.notificar(1,"distingues unos aullidos...","se escuchan pisadas...")
@@ -322,6 +329,12 @@ class Room2(Level):
         if self.player.vida<=50:
             self.player.potions+=2
             self.notificar(0,"Ante tus heridas recibes 2 pociones","cantidad actual:",self.player.potions)
+
+
+        self.notificar(0,"\"Tenemos agentes para dejarte entrar\"","\"Ve al fondo del foso\"",
+                        "\"Busca un elfo y da la contraseñas: Invicta\"")
+        self.banco[1].hacer(self.player)
+        self.notificar(0,"")
         self.exit()
 
     def right_path(self):
@@ -415,7 +428,15 @@ class Room2(Level):
 
             return ganador    
 class Room3(Level):
-    pass
+    def enter(self):
+        print(self.info)
+        op = self.validar()
+        if op == self.actions[2]: # Rodear
+            self.notificar(0,"una torre se encuentra del otro lado del foso"
+                            ,"un guardia se aproxima desde el bosque...")
+        elif op == self.actions[3]: # Saltar
+            self.notificar(0,"nadas rapidamente hacia la base del castillo")
+
         
 class World:
     def __init__(self):

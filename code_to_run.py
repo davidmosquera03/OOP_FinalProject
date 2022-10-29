@@ -1,6 +1,6 @@
-from Sprites import Personaje,Guerrero,Mago,Arquero
-from Levels import Room1,Room2,World
-from Preguntas import banco1,banco2
+from Sprites import Guerrero,Mago,Arquero
+from Levels import Room1,Room2,Room3,World
+from Preguntas import banco1,banco2,banco3
 import time
 
 print("Bienvenido")
@@ -41,12 +41,14 @@ one = Room1(["izquierda","derecha"],
 dos = Room2(["buscar fogata", "seguir adelante"],
             "Te encuentras enfrente de un bosque tupido y oscuro,una fogata se ve en el fondo"
             ,p1,banco2)
+tres = Room3(["rodear","saltar"],"El castillo con sus torres emerge imponente en la cima de una colina,\
+                lo rodea un foso y no hay puentes a la puerta",p1,banco3)
 
 mundo = World()
 mundo.add_level(one)
 mundo.add_level(dos)
+mundo.add_level(tres)
 print("Comenzando...")
 time.sleep(0.5)
 mundo.start()
-
 

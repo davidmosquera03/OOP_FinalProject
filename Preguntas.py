@@ -52,11 +52,20 @@ d = Pregunta("¿Qué debería hacer una interfaz con encapsulación adecuada?",
             "limitar la interacción en lo necesario"],1,2)
             
 e = Pregunta("¿Cual contiene al otro?",
-            ["Modulos","Paquetes"],0,1)  
+            ["Modulos","Paquetes"],1,1)  
+
+f = Pregunta("¿Cúal declaración de herencia es correcta?",\
+            ["class ConcreteHouse(abc.ABC)","class Felino(Lince)",\
+            "class Lince(Felino)"],2,3)
+
+g = Pregunta("¿Que implica el polimorfismo con dos funciones en dos clases?",
+            ["mismo nombre diferente implementación",
+            "diferente nombre misma implementación"],0,2)
 
 x = Pregunta("¿Qué expresión se refiere a la clase madre?"
                 ,["parent.()","ultra.()","super.()"],2,2) 
                 
 banco1 =[a,b,c] # Abstracción
 banco2 = [d,e]  # Encapsulación
-banco3=[]     # Herencia y Polimorfismo
+banco3=[f,g]     # Herencia y Polimorfismo
+
