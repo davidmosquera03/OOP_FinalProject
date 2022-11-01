@@ -1,6 +1,5 @@
 import time
 
-
 class Personaje:
 
     def __init__(self, nombre, fuerza, inteligencia,defensa,vida):
@@ -109,7 +108,7 @@ class Mago(Personaje):
         while True: 
             try:
                 opcion = int(input("Elige un arma: (1) Cetro Vampirico, libro +14."+
-                            " (2) Cetro de valhala , libro +10 vida+5\n"))
+                            " (2) Cetro de Valhala , libro +10 vida+5\n"))
                 if opcion == 1:
                     self.libro+=14
                     break
@@ -173,5 +172,27 @@ class Enemigo(Personaje):
     def morir(self):
         self.vida = 0
         print(f" El Enemigo {self.nombre} está muerto")
+
+class Dragon(Personaje):
+    def __init__(self,nombre,vida,fuerza):
+        self.nombre = nombre
+        self.vida = vida
+        self.fuerza = fuerza
+        self.defensa = 50
+    
+    def atributos(self):
+        print("nombre ",self.nombre)
+        print("vida ",self.vida)
+        print("-Fuerza: ", self.fuerza)
+        print("-Defensa : " , self.defensa)
+        print("-Vida: " , self.vida)
+
+class IceDragon(Dragon):
+    pass
+
+class ElectricDragon(Dragon):   
+    pass
+
+a = Dragon("a",1,1)
 
 

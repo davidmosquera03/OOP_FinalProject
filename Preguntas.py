@@ -68,5 +68,5 @@ x = Pregunta("¿Qué expresión se refiere a la clase madre?"
                 
 banco1 =[a,b,c] # Abstracción
 banco2 = [d,e]  # Encapsulación
-banco3=[f,g]     # Herencia y Polimorfismo
+banco3=[f,g,x]     # Herencia y Polimorfismo
 
