@@ -78,8 +78,8 @@ class Level(abc.ABC):
         """
         Entrar al siguiente nivel en el Mundo
         """
-        self.player.subir_nivel(4,4,4)
         if(self.next is not None):
+            self.player.subir_nivel(4,4,4)
             self.next.enter()   
         else: 
             pass
@@ -306,10 +306,11 @@ class Room1(Level):
                 self.player.gancho = True
             self.banco[1].hacer(self.player)
 
-        self.notificar(0,"\"Puedo hablarte del primer secreto\"",
+        if op == self.actions[3] or op == self.actions[4]:
+            self.notificar(0,"\"Puedo hablarte del primer secreto\"",
                             "Abstractio:","Oculta los detalles de la implementación",
                             "facilita la interfaz")
-        self.exit()
+            self.exit()
             
 
 class Room2(Level):
@@ -474,7 +475,7 @@ class Room3(Level):
             self.notificar(0,"una torre se encuentra del otro lado del foso"
                             ,"un guardia se aproxima desde el bosque...")
             self.update(["atacar","saltar"])
-            if isinstance(self.player,Arquero) and self.player.gancho is True:
+            if isinstance(self.player,Arquero) and self.player.gancho:
                 self.actions.append("usar gancho")
             op = self.validar()
 
@@ -500,7 +501,7 @@ class Room3(Level):
                                 "la disparas contra la cima de la torre y escalas")
                 self.notificar(0,"en la cima descubres un pergamino que brilla",
                         "describe los metodos de un dragón eléctrico")
-                #self.lighting = True
+                self.lighting = True
                 self.notificar(0,"en el fondo distingues Ex Nihil por su cupula dorada..."
                         "saltas por las murallas hasta llegar")
                 self.ex_nihil()
