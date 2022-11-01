@@ -169,6 +169,17 @@ class Level(abc.ABC):
             return ganador 
 
 class Room1(Level):
+    """
+    Primer nivel
+    Cuartos con regresión
+
+    booleanos de actividades
+    defeat: Derrotar orco
+    potion: Hallar poción
+    askedr: Pregunta izquierda
+    askedl: Pregunta derecha
+    
+    """
     defeat = False # Derrotar orco
     potion = False  # Hallar poción
     askedr = False  # Pregunta izquierda
@@ -232,6 +243,9 @@ class Room1(Level):
 
                 
     def left_path(self):
+        """
+        Tras derrotar orco
+        """
         self.notificar(0,"Una salida de la cueva se ve por el tunel")
         self.update(["revisar cuerpo","seguir","volver", "examinar muros"])
         op = self.validar()
@@ -273,6 +287,9 @@ class Room1(Level):
             self.left_path()
 
     def right_path(self,again = False):
+        """
+        Gruta con lago
+        """
         self.notificar(0,"Ante ti hay un lago profundo",
                         "otro troll cuida la salida al otro lado")
         self.update(["revisar arriba","saltar"])
@@ -314,6 +331,11 @@ class Room1(Level):
             
 
 class Room2(Level):
+    """
+    Segundo Nivel
+    Camino principal con alternativa
+    conectada
+    """
     asked = False
     def enter(self,again:bool = False, alt = False):
         if not alt:
@@ -379,6 +401,9 @@ class Room2(Level):
                 self.right_path()
                 
     def left_path(self, alt=False):
+        """
+        Guarida hechicero
+        """
         if alt:
             self.notificar(0,"Un hechichero te recibe en su guarida",
                              "\"No esperaba encontrarte aun\"","\"Bienvenido\"")
@@ -407,6 +432,9 @@ class Room2(Level):
             self.exit()
 
     def right_path(self):
+        """
+        Cabaña alternativa
+        """
         self.update(["levantar librero","atacar desde ventana"])
         self.notificar(1,"Encuentras una poción en el piso")
         self.player.potions += 1
@@ -452,8 +480,7 @@ class Room3(Level):
     """
     Último nivel
 
-    ice,fire,lighting: booleanos
-    sobre tipo de dragon válido
+    ice,fire,lighting: booleanos sobre tipo de dragon válido
     
     guia: diccionario de instanciación
     """
@@ -511,21 +538,29 @@ class Room3(Level):
     def left_path(self): 
         """
         Trama de Inflitración
+        Worldbuilding
+        
         """
         self.notificar(0,"avanzas por las calles","las casas están siendo vaciadas",
         "los habitantes remplazados por gente idéntica al guardia que acabaste...")
+
         self.update(["investigar","seguir"])
         op = self.validar()
         if op == self.actions[2]:
+
             self.notificar(0,"entras a una casa",
             "otro soldado igual te habla mirando un número en tu uniforme",
             "\"Inheritus 154 vuelve a tu puesto\"",
             "\"Suprimir los humanos polimorfos no ha acabado\"",
             "\"Debo recordarte la importancia de la Herencia en nuestro orden...\"")
+
             self.banco[0].hacer(self.player)
+
             self.notificar(0,"\"Nuestra clase madre es Humano, y el tirano su mejor objeto\"",
             "\"piensa en como invocar su herencia en ti\"") 
+
             self.banco[2].hacer(self.player)
+
             self.notificar(0,"Aguantas el descontento de su ideología y te retiras",
             "detener el Tirano y sus Herederos salvará la gente (?)")   
        
@@ -569,15 +604,16 @@ class Room3(Level):
     def ex_nihil(self):
         """
         Iglesia de Instanciación
-
         """
         self.banco[1].hacer(self.player)
-        self.notificar(0,"Te acercas al atrio","¡Es hora de crear un dragón!"
+        self.notificar(0,"Te acercas al atrio","¡Es hora de crear un dragón!",
                         "escribe cada parte de la Clase para crearla")
         self.actions =["clase","atributos","metodos"]
+
         while len(self.actions)!=0:
             print(self.actions)
             op = input()
+
             if op in self.actions:
                 self.notificar(1,self.guia[op])
                 del self.guia[op]  
@@ -585,17 +621,24 @@ class Room3(Level):
 
         self.notificar(1,"¿Qué nombre le darás?")
         name = input()
+
         if self.ice or self.lighting:
+
             self.notificar(0,"Ultimos Secretos","Inheritas y Polymorphismus:",
             "Obten los métodos y atributos de una clase madre",
             "Modificalos a tu voluntad")
+
             print(self.ice,self.fire,self.lighting)
             self.update(["hielo","fuego","electricidad"])
+
             op = self.validar()
+
             if op == self.actions[2] and self.ice:
                 dragon = IceDragon(name,1000,150)
+
             elif op == self.actions[3]:
                 dragon = Dragon(name, 800,100)
+
             elif op == self.actions[4] and self.lighting:
                 dragon = ElectricDragon(name, 900,200)
         else:
@@ -604,23 +647,31 @@ class Room3(Level):
         self.end(dragon)
             
     def end(self,dragon:Dragon):
+        """
+        Batalla final
+        """
+
         self.notificar(0,"montas "+dragon.nombre+" y se elevan",
         "descienden al palacio destruyendo el techo","el trono está vacío",
         "pero un rugido se escucha...")
+
         self.notificar(0,"y emerge otro dragón desde el suelo",
             "El gran tirano ha instanciado su propio dragón")
+
         boss = Dragon("Balerion",1200,120)
         win = self.combate(dragon,boss)
         if win!=dragon.nombre:
             self.notificar(0,"intentas descender de tu dragon muerto...",
             "la rafaga de fuego que te atraviesa no deja ni huesos que enterrar",
             "tú y tu dragón son las primeras muertes de la nueva Era de Terror del Gran Tirano")
+
         else:
             self.notificar(0,dragon.nombre+" aterriza sobre el cuerpo de "+boss.nombre,
             "el gran Tirano es aplastado",
             "mientras la vida se le escapa, ve como retiras su corona...")
             self.notificar(0,"Te coronas como líder?",
             "¿O destituyes la monarquía?","Aprovecha lo que has ganado")
+
         self.exit()
 
     def combate3(self):
@@ -632,10 +683,20 @@ class Room3(Level):
 class World:
 
     def __init__(self):
+        """
+        Constructor de Mundo
+
+        PTR: primer elemento 
+        (pointer)
+        ULT: ultimo elemento
+        """
         self.PTR= None
         self.ULT = None
 
     def add_level(self, lvl: Level):
+        """
+        Añade un nivel a la cola
+        """
         if self.PTR is None:
             self.PTR = lvl
             self.ULT = lvl
@@ -644,6 +705,10 @@ class World:
             self.ULT = lvl
 
     def start(self):
+        """
+        Empieza a recorrer
+        los niveles
+        """
         L = self.PTR
         L.enter()
         print("Ha terminado el juego")
