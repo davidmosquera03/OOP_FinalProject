@@ -193,6 +193,5 @@ class IceDragon(Dragon):
 class ElectricDragon(Dragon):   
     pass
 
-a = Dragon("a",1,1)
 
 
