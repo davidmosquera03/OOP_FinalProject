@@ -569,25 +569,19 @@ class Room3(Level):
         """
         Iglesia de Instanciación
 
-        extra: vida extra al dragón
         """
-        extra = 0
-
         self.banco[1].hacer(self.player)
         self.notificar(0,"Te acercas al atrio","¡Es hora de crear un dragón!"
                         "escribe cada parte de la Clase para crearla")
-        count = 0
-        self.update(["clase","atributos","metodos"])
-        while count!=3:
+        self.actions =["clase","atributos","metodos"]
+        while len(self.actions)!=0:
             print(self.actions)
             op = input()
-            if op.lower() in self.actions:
-                self.notificar(1.5,self.guia[op])
-                if op ==self.actions[0]:
-                    self.player.potions-=1
-                    extra +=25
-                elif op !=self.actions[1]:
-                    count +=1
+            if op in self.actions:
+                self.notificar(1,self.guia[op])
+                del self.guia[op]  
+                self.actions.remove(op) 
+
         self.notificar(1,"¿Qué nombre le darás?")
         name = input()
         if self.ice or self.lighting:
@@ -605,7 +599,6 @@ class Room3(Level):
                 dragon = ElectricDragon(name, 900,200)
         else:
             dragon = Dragon(name, 800,100)
-        dragon.vida += extra
         dragon.atributos()
         self.end(dragon)
             
@@ -640,6 +633,7 @@ class World:
     def __init__(self):
         self.PTR= None
         self.ULT = None
+
     def add_level(self, lvl: Level):
         if self.PTR is None:
             self.PTR = lvl
