@@ -1,5 +1,7 @@
 # OOP_FinalProject
-![Imagen](img//cover.jpg)
+
+<img src="img//cover.jpg" alt="drawing" width="400"/>
+
 ## **Tipos de Personaje**
 ### Guerrero 
 * Fuerza: 25
@@ -21,3 +23,4 @@
 * Defensa: 15
 * Vida: 95/90
 * Crítico: 13
+
