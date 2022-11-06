@@ -13,7 +13,7 @@ while len(name)==0:
     print("nombre es un atributo necesario")
     name = input()
 
-print("Escoge una sub-clase: Tiene todo lo necesario de un Personaje")
+print("Escoge una sub-clase ",name,": Tiene todo lo necesario de un Personaje")
 print("(1) Guerrero (2) Mago (3) Arquero")
 op = input()
 n = ["1","2","3"]

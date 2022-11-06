@@ -175,17 +175,70 @@ class Enemigo(Personaje):
 
 class Dragon(Personaje):
     def __init__(self,nombre,vida,fuerza):
+        """
+        Constructor de clase Dragón
+        charging: booleano de cargar ataque
+        multiplicador: aumentod de daño por multiplicador
+        """
         self.nombre = nombre
         self.vida = vida
         self.fuerza = fuerza
         self.defensa = 50
-    
+        self.charging = False
+        self.multiplicador = 1
+
     def atributos(self):
         print("nombre ",self.nombre)
         print("vida ",self.vida)
         print("-Fuerza: ", self.fuerza)
         print("-Defensa : " , self.defensa)
         print("-Vida: " , self.vida)
+
+    def daño(self, enemigo):
+        daño = self.fuerza - enemigo.defensa
+        if daño<0:
+            return 0
+        return daño
+    
+    def atacar (self,enemigo):
+        daño = self.daño(enemigo)
+        enemigo.vida = enemigo.vida - daño
+        print(f"{self.nombre} ha realizado {daño} puntos de daño a {enemigo.nombre}")
+        if enemigo.esta_vivo():
+            print(f"la vida de {enemigo.nombre} es {enemigo.vida} ")
+        else:
+            enemigo.morir()
+
+        if self.charging:
+            self.fuerza = int(   self.fuerza/(self.multiplicador))  
+            print("Tu fuerza  vuelve a ",self.fuerza)
+            self.charging = False
+            self.multiplicador = 1
+
+    def bajar_defensa(self,enemigo:Enemigo):
+        """
+        Reduce en 20 puntos 
+        la defensa del enemigo
+        """
+        enemigo.defensa -= 20
+        print(f"{self.nombre} ha bajado en 20 puntos la defensa a {enemigo.nombre}")
+        print(f"su defensa es ahora {enemigo.defensa}")
+    
+    def cargar_ataque(self,enemigo:Enemigo):
+        """
+        Usa el turno para aumentar el daño
+        Se puede hacer hasta 3 veces
+        """
+        if self.multiplicador == 8:
+            print("Suficientes cargas!")
+            self.atacar(enemigo)
+        else:
+            print(self.nombre, "está cargando un ataque poderoso...")
+            self.multiplicador *= 2
+            print("Multiplicador x",self.multiplicador)
+            self.charging = True
+            self.fuerza *= 2
+            print("Fuerza es ",self.fuerza)
 
 class IceDragon(Dragon):
     pass

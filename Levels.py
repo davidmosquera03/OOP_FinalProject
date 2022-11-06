@@ -648,7 +648,7 @@ class Room3(Level):
             
     def end(self,dragon:Dragon):
         """
-        Batalla final
+        Batalla Final
         """
 
         self.notificar(0,"montas "+dragon.nombre+" y se elevan",
@@ -659,7 +659,7 @@ class Room3(Level):
             "El gran tirano ha instanciado su propio dragón")
 
         boss = Dragon("Balerion",1200,120)
-        win = self.combate(dragon,boss)
+        win = self.combate3(dragon,boss)
         if win!=dragon.nombre:
             self.notificar(0,"intentas descender de tu dragon muerto...",
             "la rafaga de fuego que te atraviesa no deja ni huesos que enterrar",
@@ -669,16 +669,53 @@ class Room3(Level):
             self.notificar(0,dragon.nombre+" aterriza sobre el cuerpo de "+boss.nombre,
             "el gran Tirano es aplastado",
             "mientras la vida se le escapa, ve como retiras su corona...")
-            self.notificar(0,"Te coronas como líder?",
+            self.notificar(0,"¿Te coronas como líder?",
             "¿O destituyes la monarquía?","Aprovecha lo que has ganado")
 
         self.exit()
 
-    def combate3(self):
+    def combate3(self,j1: Dragon,j2: Dragon):
         """
-        Combate interactivo
+        Pelea entre dos personajes
+
+        cada turno se atacan entre si
+        acaba cuando la vida de uno es 0
+        devuelve el nombre del ganador
         """
-        pass
+        wait = 0
+        turno = 1
+        ganador = None
+        print(j1.nombre," vs. ",j2.nombre)
+        while j1.esta_vivo() and j2.esta_vivo():
+
+            print("\nTurno" , turno )
+            print(f">>>> Accion de {j1.nombre} : ", sep="")
+            print("1 rasguño, 2 incendiar, 3 cargar ataque aereo")
+            op = input()
+            while op not in ["1","2","3"]:
+                op = input()
+            if op =="1":
+                j1.atacar(j2)
+            elif op =="2":
+                j1.bajar_defensa(j2)
+            elif op == "3":
+                j1.cargar_ataque(j2)
+            time.sleep(wait)
+            if(j2.esta_vivo()):
+                print(f">>>> Accion de {j2.nombre} : ", sep="")
+                j2.atacar(j1)
+                turno += 1
+                time.sleep(wait)
+
+        if j1.esta_vivo():
+            print(f"\nHa ganado: {j1.nombre}")
+            ganador = j1.nombre
+        elif j2.esta_vivo():
+            print(f"\nHa ganado: {j2.nombre} ")
+            ganador = j2.nombre
+        else:
+            print(f"\nEmpate entre: {j1.nombre} y {j2.nombre}")
+        return ganador
 
 class World:
 
