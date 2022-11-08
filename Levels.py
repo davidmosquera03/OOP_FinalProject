@@ -79,12 +79,12 @@ class Level(abc.ABC):
         Entrar al siguiente nivel en el Mundo
         """
         if(self.next is not None):
-            self.player.subir_nivel(4,4,4)
+            self.player.subir_nivel(4)
             self.next.enter()   
         else: 
             pass
 
-    def combate(self, j1: Personaje,j2: Personaje):
+    def combate(self,j1: Personaje,j2: Personaje):
         """
         Pelea entre dos personajes
 
@@ -92,17 +92,24 @@ class Level(abc.ABC):
         acaba cuando la vida de uno es 0
         devuelve el nombre del ganador
         """
-        wait = 0
+        wait = 2
         turno = 1
         ganador = None
         print(j1.nombre," vs. ",j2.nombre)
         while j1.esta_vivo() and j2.esta_vivo():
             print("\nTurno" , turno )
             print(f">>>> Accion de {j1.nombre} : ", sep="")
-            j1.atacar(j2)
+            print("1 atacar, 2 usar habilidad")
+            op = input()
+            while op not in ["1","2"]:
+                op = input()
+            if op =="1":
+                j1.atacar(j2)
+            elif op =="2":
+                j1.usar_habilidad(j2)
             time.sleep(wait)
             if(j2.esta_vivo()):
-                print(f">>>> Accion de {j2.nombre} : ", sep="")
+                print(f"\n>>>> Accion de {j2.nombre} : ", sep="")
                 j2.atacar(j1)
                 turno += 1
                 time.sleep(wait)
@@ -138,16 +145,24 @@ class Level(abc.ABC):
                     while op!="1" and op!="2":
                         op = input("opcion invalida:")
                     if op=="1":
-                        j1.atacar(j2)
+                        target = j2
                     else:
-                        j1.atacar(j3)
+                        target = j3
                 elif not j2.esta_vivo():
-                    j1.atacar(j3)
+                    target = j3
                 elif not j3.esta_vivo():
-                    j1.atacar(j2)
+                    target = j2
+                print("1 atacar, 2 usar habilidad")
+                op = input()
+                while op not in ["1","2"]:
+                    op = input()
+                if op =="1":
+                    j1.atacar(target)
+                elif op =="2":
+                    j1.usar_habilidad(target)
                 time.sleep(wait)
                 if(j2.esta_vivo()):
-                    print(f">>>> Accion de {j2.nombre} : ", sep="")
+                    print(f"\n>>>> Accion de {j2.nombre} : ", sep="")
                     j2.atacar(j1)
                     turno += 1
                     time.sleep(wait)
@@ -192,7 +207,7 @@ class Room1(Level):
 
             if(not self.defeat):
                 enemigo1 = Enemigo("Orco",40,30,10,400)
-                self.notificar(0,"Una figura se acerca...","¡Un orco hambriento!")
+                self.notificar(1.5,"Una figura se acerca...","¡Un orco hambriento!")
                 print("Combate")
                 vida = self.player.vida
                 win = self.combate(self.player,enemigo1)
@@ -210,16 +225,16 @@ class Room1(Level):
 
         elif op == self.actions[3]:
 
-            self.notificar(0,"Un troll desarmado resguarda una puerta","No te ha visto aun")
+            self.notificar(1.25,"Un troll desarmado resguarda una puerta","No te ha visto aun")
             self.update(["atacar","acercarse"])
             op = self.validar()
             if op==self.actions[2]:
                 enemigo2 = Enemigo("Guardian",100,20,80,800)
-                self.notificar(0,"Del troll emerge una hacha que emana fuego","No hay vuelta atrás...")
+                self.notificar(2,"Del troll emerge un hacha que emana fuego","No hay vuelta atrás...")
                 vida = self.player.vida
                 win = self.combate(self.player,enemigo2)
                 if win!=self.player.nombre:
-                    self.notificar(0,"Tu magia es aún muy debil","El troll te aplasta")
+                    self.notificar(1.5,"Tu magia es aún muy debil","El troll te aplasta")
                     self.update(self.og_actions)
                     self.player.vida = vida
                     self.enter()
@@ -227,7 +242,7 @@ class Room1(Level):
 
                 if not self.askedr:
                     self.askedr = True 
-                    self.notificar(0,"«No enfrentes el mundo sin conocimiento»",
+                    self.notificar(1.2,"«No enfrentes el mundo sin conocimiento»",
                                 "«Puedo por medio de una Pregunta aumentar tu inteligencia...»"
                                     ,"«Cuanto antes aciertes, mayor la recompensa»")
                     self.banco[0].hacer(self.player)
@@ -246,19 +261,19 @@ class Room1(Level):
         """
         Tras derrotar orco
         """
-        self.notificar(0,"Una salida de la cueva se ve por el tunel")
+        self.notificar(1.5,"Una salida de la cueva se ve por el tunel")
         self.update(["revisar cuerpo","seguir","volver", "examinar muros"])
         op = self.validar()
 
         if op == self.actions[2]: # Revisar cuerpo
-            self.notificar(0,"Encuentras una nota:",
+            self.notificar(1.5,"Encuentras una nota:",
                             "\"los lobos guardianes estan listos en el bosque\"",
                             "\"el gris es el mas peligroso\"",
                             "\"cuidado al salir\"")
             if not self.potion:
                 self.potion = True
                 self.player.potions+=1
-                self.notificar(0,"¡Has hallado una poción!","cantidad actual:",self.player.potions)
+                self.notificar(2,"¡Has hallado una poción!","cantidad actual:",self.player.potions)
             self.left_path()
 
         elif op == self.actions[3]: # seguir
@@ -269,20 +284,20 @@ class Room1(Level):
             self.enter()
 
         elif op == self.actions[5]: # Muros
-            self.notificar(0,"Dibujos grabados en la pared:"
+            self.notificar(1.8,"Dibujos grabados en la pared:"
                             ,"de un templo emerge un dragón"
                             ,"Una frase debajo: Ex Nihilo Ecclesia"
                             ,"El dragón incendia y derriba una torre",
                              "notas runas antiguas...")
             if not self.askedl:
                 if self.player.inteligencia>=10:
-                    self.notificar(0,"tu inteligencia permite leerlas",
+                    self.notificar(1.5,"tu inteligencia permite leerlas",
                                     "\"Abstractio, Encapsulation, Hereditas, Polymorphismus\"",
                                     "\"Domina los principios y controlarás los objetos\"")
                 else:
-                    self.notificar(0,"No logras descifrar su significado")
+                    self.notificar(1.4,"No logras descifrar su significado")
                 self.askedl = True
-                self.notificar(0,"Tu presencia activa las runas...")
+                self.notificar(1,"Tu presencia activa las runas...")
                 self.banco[2].hacer(self.player)
             self.left_path()
 
@@ -290,7 +305,7 @@ class Room1(Level):
         """
         Gruta con lago
         """
-        self.notificar(0,"Ante ti hay un lago profundo",
+        self.notificar(1.4,"Ante ti hay un lago profundo",
                         "otro troll cuida la salida al otro lado")
         self.update(["revisar arriba","saltar"])
 
@@ -299,7 +314,7 @@ class Room1(Level):
         op = self.validar()
 
         if op ==self.actions[2]:
-                self.notificar(0,"Una cuerda cuelga del techo")
+                self.notificar(1,"Una cuerda cuelga del techo")
                 self.right_path(again=True)
 
         elif op == self.actions[3]:
@@ -317,14 +332,14 @@ class Room1(Level):
                     
 
         elif again and op==self.actions[4]: # Usar cuerda
-            self.notificar(0,"Llegas a salvo junto al troll")
+            self.notificar(1,"Llegas a salvo junto al troll")
             if isinstance(self.player,Arquero): # Añadir habilidad?
-                self.notificar(0,"Guardas la cuerda","puede ser util para luego")
+                self.notificar(1,"Guardas la cuerda","puede ser util para luego")
                 self.player.gancho = True
             self.banco[1].hacer(self.player)
 
         if op == self.actions[3] or op == self.actions[4]:
-            self.notificar(0,"\"Puedo hablarte del primer secreto\"",
+            self.notificar(1,"\"Puedo hablarte del primer secreto\"",
                             "Abstractio:","Oculta los detalles de la implementación",
                             "facilita la interfaz")
             self.exit()
@@ -378,24 +393,24 @@ class Room2(Level):
                     else:
                         self.notificar(1,"pero no captas su poder",
                                         "te mueves escondiendote de los restantes")
-                    self.notificar(0,"avanzas adelante","ya se ve el castillo...")
+                    self.notificar(1.4,"avanzas adelante","ya se ve el castillo...")
                     self.exit()
                 
         elif op == self.actions[3]:
-            self.notificar(0,"distingues unos aullidos...","se escuchan pisadas...")
+            self.notificar(1.2,"distingues unos aullidos...","se escuchan pisadas...")
             vida = self.player.vida
             lobo1 = Enemigo("lobo negro",35,10,20,50)
             lobo2 = Enemigo("lobo gris ",45,10,20,60)
             win = self.combate2(self.player,lobo1,lobo2)
             if win!=self.player.nombre:
-                self.notificar(0,"una jauría de lobos llega para compartir su cena",
+                self.notificar(1.4,"una jauría de lobos llega para compartir su cena",
                             "intenta de nuevo")
                 self.player.vida = vida
                 self.enter()
             else:
-                self.notificar(0,"no puedes evitar correr al oir mas lobos en camino"
+                self.notificar(1.5,"no puedes evitar correr al oir mas lobos en camino"
                                 ,"...")
-                self.notificar(0,"Agotado, llegas a una cabaña y cierras la puerta",
+                self.notificar(1.5,"Agotado, llegas a una cabaña y cierras la puerta",
                         "los lobos esperan afuera hambrientos",
                         "hay enormes estantes derribados y una ventana rota")
                 self.right_path()
@@ -405,15 +420,15 @@ class Room2(Level):
         Guarida hechicero
         """
         if alt:
-            self.notificar(0,"Un hechichero te recibe en su guarida",
+            self.notificar(1.5,"Un hechichero te recibe en su guarida",
                              "\"No esperaba encontrarte aun\"","\"Bienvenido\"")
         if self.player.vida<=60:
             self.player.potions+=2
-            self.notificar(0,"Ante tus heridas recibes 2 pociones",
+            self.notificar(1.4,"Ante tus heridas recibes 2 pociones",
                         "cantidad actual:",self.player.potions)
 
 
-        self.notificar(0,"\"Tenemos agentes para dejarte entrar\"",
+        self.notificar(1.5,"\"Tenemos agentes para dejarte entrar\"",
                             "\"Ve al fondo del foso\"",
                         "\"Busca un elfo y da la contraseñas: Invicta\"")
         self.notificar(1,"\"¿Deseas algo más?\"",
@@ -427,7 +442,7 @@ class Room2(Level):
         elif op == self.actions[3]:
             self.notificar(1,"\"Bien\"","\"recibe mi Pregunta...\"")
             self.banco[1].hacer(self.player)
-            self.notificar(0,"Segundo secreto","Encapsulation",
+            self.notificar(1.5,"Segundo secreto","Encapsulation",
                     "restringe el acceso directo entre clases")
             self.exit()
 
@@ -462,7 +477,7 @@ class Room2(Level):
                 self.right_path()
 
         elif not self.asked and op == self.actions[4]:
-            self.notificar(0,"El libro está desgastado pero conserva todavia poder",
+            self.notificar(2,"El libro está desgastado pero conserva todavia poder",
                             "\"Encapsulation: Guarda a atributos y métodos en clases\"",
                              "\"limita el accesso de las otras clases a ella\"")
             self.asked = True
@@ -499,7 +514,7 @@ class Room3(Level):
         op = self.validar()
         if op == self.actions[2]: # Rodear
 
-            self.notificar(0,"una torre se encuentra del otro lado del foso"
+            self.notificar(1.5,"una torre se encuentra del otro lado del foso"
                             ,"un guardia se aproxima desde el bosque...")
             self.update(["atacar","saltar"])
             if isinstance(self.player,Arquero) and self.player.gancho:
@@ -507,7 +522,7 @@ class Room3(Level):
             op = self.validar()
 
             if op == self.actions[2]:
-                guardia = Enemigo("guardia acorazado",30,40,120,350)
+                guardia = Enemigo("guardia acorazado",45,40,120,350)
                 vida = self.player.vida 
                 win = self.combate(self.player,guardia)
                 if win!=self.player.nombre:
@@ -517,19 +532,19 @@ class Room3(Level):
                     self.player.vida = vida
                     self.enter()
                 else:
-                    self.notificar(0,"Te pones el uniforme del guardia caido"
+                    self.notificar(1.5,"Te pones el uniforme del guardia caido",
                                 "saludando ante la puerta te abre un guardia")
                     self.left_path()
             elif op == self.actions[3]: # Saltar
                 self.right_path()
 
             elif op == self.actions[4]:
-                self.notificar(0,"atas la cuerda a una flecha especial",
+                self.notificar(1.2,"atas la cuerda a una flecha especial",
                                 "la disparas contra la cima de la torre y escalas")
-                self.notificar(0,"en la cima descubres un pergamino que brilla",
+                self.notificar(1.2,"en la cima descubres un pergamino que brilla",
                         "describe los metodos de un dragón eléctrico")
                 self.lighting = True
-                self.notificar(0,"en el fondo distingues Ex Nihil por su cupula dorada..."
+                self.notificar(1.5,"en el fondo distingues Ex Nihil por su cupula dorada..."
                         "saltas por las murallas hasta llegar")
                 self.ex_nihil()
         elif op == self.actions[3]:
@@ -541,14 +556,14 @@ class Room3(Level):
         Worldbuilding
         
         """
-        self.notificar(0,"avanzas por las calles","las casas están siendo vaciadas",
+        self.notificar(1.5,"avanzas por las calles","las casas están siendo vaciadas",
         "los habitantes remplazados por gente idéntica al guardia que acabaste...")
 
         self.update(["investigar","seguir"])
         op = self.validar()
         if op == self.actions[2]:
 
-            self.notificar(0,"entras a una casa",
+            self.notificar(1.5,"entras a una casa",
             "otro soldado igual te habla mirando un número en tu uniforme",
             "\"Inheritus 154 vuelve a tu puesto\"",
             "\"Suprimir los humanos polimorfos no ha acabado\"",
@@ -556,15 +571,15 @@ class Room3(Level):
 
             self.banco[0].hacer(self.player)
 
-            self.notificar(0,"\"Nuestra clase madre es Humano, y el tirano su mejor objeto\"",
+            self.notificar(1.2,"\"Nuestra clase madre es Humano, y el tirano su mejor objeto\"",
             "\"piensa en como invocar su herencia en ti\"") 
 
             self.banco[2].hacer(self.player)
 
-            self.notificar(0,"Aguantas el descontento de su ideología y te retiras",
+            self.notificar(1.3,"Aguantas el descontento de su ideología y te retiras",
             "detener el Tirano y sus Herederos salvará la gente (?)")   
        
-        self.notificar(0,"Sigues el camino hasta llegar frente a una iglesia",
+        self.notificar(1.5,"Sigues el camino hasta llegar frente a una iglesia",
         "su cupula dorada y el engravado: Ex Nihil Ecclesia")
         self.ex_nihil()
 
@@ -572,19 +587,19 @@ class Room3(Level):
         """
         Trama en el foso
         """
-        self.notificar(0,"encuentras al elfo junto a una alcantarilla",
+        self.notificar(1.4,"encuentras al elfo junto a una alcantarilla",
         "detrás cientas de ratas detienen el camino",
                         "\"Dime la clave y sabré que eres el indicado\"")
         txt = input()
         if txt == "Invictus":
             self.ice = True
-            self.notificar(0,"\"Perfecto\"",
+            self.notificar(1.5,"\"Perfecto\"",
                     "\"te has ganado el pergamino de Hielo\"",
                     "acompañame y pasamos las Ratas Eternas")
-            self.notificar(0,"El elfo lanza un hechizo y congela las ratas...")
+            self.notificar(1,"El elfo lanza un hechizo y congela las ratas...")
             
         else:
-            self.notificar(0,"\"Aún puedes probarte\"",
+            self.notificar(1,"\"Aún puedes probarte\"",
                         "\"sobrevive por tu cuenta\"")
             vida = self.player.vida
             ratag = Enemigo("rata gigante",40,0,20,400)
@@ -594,7 +609,7 @@ class Room3(Level):
                 self.player.vida = vida
                 self.right_path()
             
-        self.notificar(0,"avanzas hasta el fondo...",
+        self.notificar(1.4,"avanzas hasta el fondo...",
             "encuentras un generador \"Inheritas Ad Infinitum\"",
             "lo destruyes y ves como cada rata desaparece...",
             "subes la escalera y descubres una iglesia...")
@@ -606,7 +621,7 @@ class Room3(Level):
         Iglesia de Instanciación
         """
         self.banco[1].hacer(self.player)
-        self.notificar(0,"Te acercas al atrio","¡Es hora de crear un dragón!",
+        self.notificar(2,"Te acercas al atrio","¡Es hora de crear un dragón!",
                         "escribe cada parte de la Clase para crearla")
         self.actions =["clase","atributos","metodos"]
 
@@ -624,7 +639,7 @@ class Room3(Level):
 
         if self.ice or self.lighting:
 
-            self.notificar(0,"Ultimos Secretos","Inheritas y Polymorphismus:",
+            self.notificar(1.5,"Ultimos Secretos","Inheritas y Polymorphismus:",
             "Obten los métodos y atributos de una clase madre",
             "Modificalos a tu voluntad")
 
@@ -651,25 +666,25 @@ class Room3(Level):
         Batalla Final
         """
 
-        self.notificar(0,"montas "+dragon.nombre+" y se elevan",
+        self.notificar(1.2,"montas "+dragon.nombre+" y se elevan",
         "descienden al palacio destruyendo el techo","el trono está vacío",
         "pero un rugido se escucha...")
 
-        self.notificar(0,"y emerge otro dragón desde el suelo",
+        self.notificar(1.2,"y emerge otro dragón desde el suelo",
             "El gran tirano ha instanciado su propio dragón")
 
         boss = Dragon("Balerion",1200,120)
         win = self.combate3(dragon,boss)
         if win!=dragon.nombre:
-            self.notificar(0,"intentas descender de tu dragon muerto...",
+            self.notificar(1.2,"intentas descender de tu dragon muerto...",
             "la rafaga de fuego que te atraviesa no deja ni huesos que enterrar",
             "tú y tu dragón son las primeras muertes de la nueva Era de Terror del Gran Tirano")
 
         else:
-            self.notificar(0,dragon.nombre+" aterriza sobre el cuerpo de "+boss.nombre,
+            self.notificar(1.5,dragon.nombre+" aterriza sobre el cuerpo de "+boss.nombre,
             "el gran Tirano es aplastado",
             "mientras la vida se le escapa, ve como retiras su corona...")
-            self.notificar(0,"¿Te coronas como líder?",
+            self.notificar(2,"¿Te coronas como líder?",
             "¿O destituyes la monarquía?","Aprovecha lo que has ganado")
 
         self.exit()
@@ -682,7 +697,7 @@ class Room3(Level):
         acaba cuando la vida de uno es 0
         devuelve el nombre del ganador
         """
-        wait = 0
+        wait = 2
         turno = 1
         ganador = None
         print(j1.nombre," vs. ",j2.nombre)
@@ -702,7 +717,7 @@ class Room3(Level):
                 j1.cargar_ataque(j2)
             time.sleep(wait)
             if(j2.esta_vivo()):
-                print(f">>>> Accion de {j2.nombre} : ", sep="")
+                print(f"\n>>>> Accion de {j2.nombre} : ", sep="")
                 j2.atacar(j1)
                 turno += 1
                 time.sleep(wait)

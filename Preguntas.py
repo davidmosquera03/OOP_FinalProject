@@ -26,6 +26,7 @@ class Pregunta:
         Realizar pregunta a player
         """
         print(self.enunciado)
+        print("Escribe el número de la opción correcta")
         print(self.opciones)
         res = input()
         while res!=str(self.correcta+1):

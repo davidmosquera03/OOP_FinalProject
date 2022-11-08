@@ -1,6 +1,5 @@
-
 @startuml
-top to bottom direction
+left to right direction
 class Personaje{
 +nombre : str
 +fuerza : Float 
@@ -14,7 +13,8 @@ class Personaje{
 +morir()
 +daño()
 +atacar()
-+ cambiar_arma()
++cambiar_arma()
++usar_habilidad()
 }
 class Guerrero{
 + espada: Float
@@ -42,6 +42,17 @@ class Level{
 + notificar()
 }
 class Enemigo{
++fail:int
+}
+class abc.ABC{
+}
+class Dragon{
++charging: bool
++multiplicador: int
+}
+class IceDragon{
+}
+class ElectricDragon{
 }
 class Pregunta{
 + enunciado: str
@@ -50,11 +61,20 @@ class Pregunta{
 +bono: int
 +hacer()
 }
+class Room{
++left_path()
++right_path()
+}
 Mundo o-- Level
+Level <|--abc.ABC
+Room --|> Level
+Personaje <|-- Dragon
 Guerrero --|> Personaje
 Enemigo --|> Personaje
 Mago --|> Personaje
 Arquero --|> Personaje
-Personaje--o Level
+Personaje--o Room
 Pregunta --o Level
+Dragon<|--ElectricDragon
+Dragon<|--IceDragon
 @enduml
