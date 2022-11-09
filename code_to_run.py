@@ -2,6 +2,8 @@ from Sprites import Guerrero,Mago,Arquero
 from Levels import Room1,Room2,Room3,World
 from Preguntas import banco1,banco2,banco3
 import time
+import winsound
+winsound.PlaySound('img\\intro.wav',winsound.SND_ASYNC) 
 
 print("Bienvenido")
 print("La tierra está en caos, el Gran Tirano ha tomado control")
@@ -47,7 +49,12 @@ mundo = World()
 mundo.add_level(one)
 mundo.add_level(dos)
 mundo.add_level(tres)
+print("Presiona Enter para Iniciar")
+on = input()
+while on!="":
+    on = input()
 print("Comenzando...")
+winsound.PlaySound('img\\sword.wav',winsound.SND_ALIAS) 
 time.sleep(0.5)
 mundo.start()
 

@@ -3,7 +3,7 @@ from Sprites import Arquero, Mago, Personaje,Enemigo,Guerrero,Dragon,ElectricDra
 import time
 import abc
 from Preguntas import Pregunta
-
+import winsound
 class Level(abc.ABC):
     def __init__(self, actions : List[str], info : str, player: Personaje, banco: List[Pregunta]) -> None:
         """
@@ -105,12 +105,14 @@ class Level(abc.ABC):
                 op = input()
             if op =="1":
                 j1.atacar(j2)
+                winsound.PlaySound('img\\sword.wav',winsound.SND_ALIAS)
             elif op =="2":
                 j1.usar_habilidad(j2)
             time.sleep(wait)
             if(j2.esta_vivo()):
                 print(f"\n>>>> Accion de {j2.nombre} : ", sep="")
                 j2.atacar(j1)
+                winsound.PlaySound('img\\sword.wav',winsound.SND_ALIAS)
                 turno += 1
                 time.sleep(wait)
         if j1.esta_vivo():
