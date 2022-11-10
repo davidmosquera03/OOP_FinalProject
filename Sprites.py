@@ -138,6 +138,7 @@ class Guerrero(Personaje):
         """
         Reducir daño
         """
+        winsound.PlaySound('img\\warrior.wav',winsound.SND_ALIAS)
         enemigo.fuerza -= 10
         print(f"{self.nombre}  {enemigo.nombre}")
         print(f"{self.nombre} ha bajado en 10 puntos la fuerza a {enemigo.nombre}")
@@ -231,6 +232,7 @@ class Arquero(Personaje):
         que ignoran armadura y aumenta 
         probabilidad de fallar
         """
+        winsound.PlaySound('img\\arrow.wav',winsound.SND_ALIAS)
         enemigo.vida -= self.critico
         if isinstance(enemigo,Enemigo):
             enemigo.fail+= self.critico

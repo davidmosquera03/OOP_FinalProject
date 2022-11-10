@@ -208,6 +208,7 @@ class Room1(Level):
     # Booleanos para registrar avances en nivel
     def enter(self):
         print(self.info)
+        print("Escribe la opción")
         op = self.validar()
         if op == self.actions[2]:
 
@@ -377,11 +378,11 @@ class Room2(Level):
                                 "se encuentran en una guarida")
                 self.left_path()
             elif op == self.actions[3]:
-                self.notificar(0,"\"De acuerdo, respeto tu decisión y me iré\"",
+                self.notificar(1.5,"\"De acuerdo, respeto tu decisión y me iré\"",
                                     "\"Sin embargo, cuidate de las gárgolas en camino...\""
                                     ,"poco despues su ida, notas dos figuras en vuelo sobre ti...")
-                g = Enemigo("Gárgola dorada",40,20,60,450)
-                g2 = Enemigo("Gárgola plateada",30,10,50,370)
+                g = Enemigo("Gárgola dorada",40,20,60,600)
+                g2 = Enemigo("Gárgola plateada",30,10,50,400)
                 vida = self.player.vida
                 win = self.combate2(self.player,g,g2)
                 if win!=self.player.nombre:
@@ -390,16 +391,16 @@ class Room2(Level):
                     self.notificar(0,"Te derrotan")
                     self.enter()
                 else:
-                    self.notificar(0,"Una gema es extraida de la Gárgola dorada",
+                    self.notificar(1.5,"Una gema es extraida de la Gárgola dorada",
                                 "Más Gárgolas se acercan...")
                     if self.player.inteligencia>=15:
-                        self.notificar(0,"Detecas la información que almacena",\
+                        self.notificar(0,"Detectas la información que almacena",\
                             "¡Rompes la encapsulación de las Gárgolas",
                             "logras reducir a 0 el atributo vida de los enemigos")
                     else:
-                        self.notificar(1,"pero no captas su poder",
+                        self.notificar(2,"pero no captas su poder",
                                         "te mueves escondiendote de los restantes")
-                    self.notificar(1.4,"avanzas adelante","ya se ve el castillo...")
+                    self.notificar(2,"avanzas adelante","ya se ve el castillo...")
                     self.exit()
                 
         elif op == self.actions[3]:
