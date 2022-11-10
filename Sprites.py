@@ -1,4 +1,5 @@
 import time
+import winsound
 from random import randint
 
 class Personaje:
@@ -69,7 +70,7 @@ class Personaje:
             return 0
         return daño
     
-    def atacar (self,enemigo):
+    def atacar(self,enemigo):
         """
         Aplica daño a enemigo
         Reporta 
@@ -140,7 +141,7 @@ class Guerrero(Personaje):
         enemigo.fuerza -= 10
         print(f"{self.nombre}  {enemigo.nombre}")
         print(f"{self.nombre} ha bajado en 10 puntos la fuerza a {enemigo.nombre}")
-        print(f"su defensa es ahora {enemigo.defensa}")
+        print(f"su fuerza es ahora {enemigo.fuerza}")
 
 class Mago(Personaje):
     def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
@@ -185,6 +186,7 @@ class Mago(Personaje):
         """
         Baja la defensa en 20 puntos
         """
+        winsound.PlaySound('img\\magic.wav',winsound.SND_ALIAS)
         enemigo.defensa -= 20
         print(f"{self.nombre} lanza un hechizo sobre {enemigo.nombre}")
         print(f"{self.nombre} ha bajado en 20 puntos la defensa a {enemigo.nombre}")
@@ -273,7 +275,6 @@ class Enemigo(Personaje):
         """
         select = randint(0,100) # Numero de 1 a 100
         daño = self.daño(enemigo) 
-        print("select es ",select,"fail es ",self.fail)
         if select<=self.fail: 
             print(f"{self.nombre} ha fallado su ataque")
         else:

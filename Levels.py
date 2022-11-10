@@ -4,6 +4,7 @@ import time
 import abc
 from Preguntas import Pregunta
 import winsound
+
 class Level(abc.ABC):
     def __init__(self, actions : List[str], info : str, player: Personaje, banco: List[Pregunta]) -> None:
         """
@@ -92,7 +93,7 @@ class Level(abc.ABC):
         acaba cuando la vida de uno es 0
         devuelve el nombre del ganador
         """
-        wait = 2
+        wait = 1.5
         turno = 1
         ganador = None
         print(j1.nombre," vs. ",j2.nombre)
@@ -105,14 +106,14 @@ class Level(abc.ABC):
                 op = input()
             if op =="1":
                 j1.atacar(j2)
-                winsound.PlaySound('img\\sword.wav',winsound.SND_ALIAS)
+                winsound.PlaySound('img\\attack.wav',winsound.SND_ALIAS)
             elif op =="2":
                 j1.usar_habilidad(j2)
             time.sleep(wait)
             if(j2.esta_vivo()):
                 print(f"\n>>>> Accion de {j2.nombre} : ", sep="")
                 j2.atacar(j1)
-                winsound.PlaySound('img\\sword.wav',winsound.SND_ALIAS)
+                winsound.PlaySound('img\\attack.wav',winsound.SND_ALIAS)
                 turno += 1
                 time.sleep(wait)
         if j1.esta_vivo():
@@ -133,7 +134,7 @@ class Level(abc.ABC):
             acaba cuando la vida de uno es 0
             devuelve el nombre del ganador
             """
-            wait = 2
+            wait = 1.5
             turno = 1
             ganador = None
             print(j1.nombre," vs. ",j2.nombre," y ",j3.nombre)
@@ -160,6 +161,7 @@ class Level(abc.ABC):
                     op = input()
                 if op =="1":
                     j1.atacar(target)
+                    winsound.PlaySound('img\\attack.wav',winsound.SND_ALIAS)
                 elif op =="2":
                     j1.usar_habilidad(target)
                 time.sleep(wait)
@@ -167,11 +169,13 @@ class Level(abc.ABC):
                     print(f"\n>>>> Accion de {j2.nombre} : ", sep="")
                     j2.atacar(j1)
                     turno += 1
+                    winsound.PlaySound('img\\attack.wav',winsound.SND_ALIAS)
                     time.sleep(wait)
                 if(j3.esta_vivo()):
                     print(f">>>> Accion de {j3.nombre} : ", sep="")
                     j3.atacar(j1)
                     turno += 1
+                    winsound.PlaySound('img\\attack.wav',winsound.SND_ALIAS)
                     time.sleep(wait)
             if j1.esta_vivo():
                 print(f"\nHa ganado: {j1.nombre}")
@@ -376,8 +380,8 @@ class Room2(Level):
                 self.notificar(0,"\"De acuerdo, respeto tu decisión y me iré\"",
                                     "\"Sin embargo, cuidate de las gárgolas en camino...\""
                                     ,"poco despues su ida, notas dos figuras en vuelo sobre ti...")
-                g = Enemigo("Gárgola dorada",40,20,60,800)
-                g2 = Enemigo("Gárgola plateada",30,10,50,700)
+                g = Enemigo("Gárgola dorada",40,20,60,450)
+                g2 = Enemigo("Gárgola plateada",30,10,50,370)
                 vida = self.player.vida
                 win = self.combate2(self.player,g,g2)
                 if win!=self.player.nombre:
@@ -432,7 +436,7 @@ class Room2(Level):
 
         self.notificar(1.5,"\"Tenemos agentes para dejarte entrar\"",
                             "\"Ve al fondo del foso\"",
-                        "\"Busca un elfo y da la contraseñas: Invicta\"")
+                        "\"Busca un elfo y da la contraseñas: Invictus\"")
         self.notificar(1,"\"¿Deseas algo más?\"",
                         "\"puedes irte si no deseas  indagar más sobre objetos\"")
 
@@ -676,6 +680,7 @@ class Room3(Level):
             "El gran tirano ha instanciado su propio dragón")
 
         boss = Dragon("Balerion",1200,120)
+        winsound.PlaySound('img\\end.wav',winsound.SND_ASYNC)
         win = self.combate3(dragon,boss)
         if win!=dragon.nombre:
             self.notificar(1.2,"intentas descender de tu dragon muerto...",

@@ -4,10 +4,10 @@ from Preguntas import banco1,banco2,banco3
 import time
 import winsound
 winsound.PlaySound('img\\intro.wav',winsound.SND_ASYNC) 
-
+time.sleep(2)
 print("Bienvenido")
 print("La tierra está en caos, el Gran Tirano ha tomado control")
-time.sleep(1.5)
+time.sleep(2)
 print("Debemos instanciar un Personaje héroe capaz de crear un Dragón para derrotarlo")
 print("Dale un nombre para empezar:")
 name = input()
@@ -54,7 +54,7 @@ on = input()
 while on!="":
     on = input()
 print("Comenzando...")
-winsound.PlaySound('img\\sword.wav',winsound.SND_ALIAS) 
+winsound.PlaySound('img\\menu_exit.wav',winsound.SND_ALIAS) 
 time.sleep(0.5)
 mundo.start()
 
