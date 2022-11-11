@@ -46,7 +46,7 @@ class Personaje:
         self.inteligencia += increase
         self.defensa += increase
         
-     
+    @property
     def esta_vivo(self):
         """
         Valida si su vida es mayor a 0
@@ -78,7 +78,7 @@ class Personaje:
         daño = self.daño(enemigo)
         enemigo.vida = enemigo.vida - daño
         print(f"{self.nombre} ha realizado {daño} puntos de daño a {enemigo.nombre}")
-        if enemigo.esta_vivo():
+        if enemigo.esta_vivo:
             print(f"la vida de {enemigo.nombre} es {enemigo.vida} ")
         else:
             enemigo.morir()
@@ -255,7 +255,7 @@ class Arquero(Personaje):
             daño *= 2
         enemigo.vida = enemigo.vida - daño
         print(f"{self.nombre} ha realizado {daño} puntos de daño a {enemigo.nombre}")
-        if enemigo.esta_vivo():
+        if enemigo.esta_vivo:
             print(f"la vida de {enemigo.nombre} es {enemigo.vida} ")
         else:
             enemigo.morir()
@@ -282,7 +282,7 @@ class Enemigo(Personaje):
         else:
             enemigo.vida = enemigo.vida - daño
             print(f"{self.nombre} ha realizado {daño} puntos de daño a {enemigo.nombre}")
-            if enemigo.esta_vivo():
+            if enemigo.esta_vivo:
                 print(f"la vida de {enemigo.nombre} es {enemigo.vida} ")
             else:
                 enemigo.morir()
@@ -316,7 +316,7 @@ class Dragon(Personaje):
         daño = self.daño(enemigo)
         enemigo.vida = enemigo.vida - daño
         print(f"{self.nombre} ha realizado {daño} puntos de daño a {enemigo.nombre}")
-        if enemigo.esta_vivo():
+        if enemigo.esta_vivo:
             print(f"la vida de {enemigo.nombre} es {enemigo.vida} ")
         else:
             enemigo.morir()

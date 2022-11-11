@@ -93,11 +93,11 @@ class Level(abc.ABC):
         acaba cuando la vida de uno es 0
         devuelve el nombre del ganador
         """
-        wait = 1.5
+        wait = 0
         turno = 1
         ganador = None
         print(j1.nombre," vs. ",j2.nombre)
-        while j1.esta_vivo() and j2.esta_vivo():
+        while j1.esta_vivo and j2.esta_vivo:
             print("\nTurno" , turno )
             print(f">>>> Accion de {j1.nombre} : ", sep="")
             print("1 atacar, 2 usar habilidad")
@@ -110,16 +110,16 @@ class Level(abc.ABC):
             elif op =="2":
                 j1.usar_habilidad(j2)
             time.sleep(wait)
-            if(j2.esta_vivo()):
+            if(j2.esta_vivo):
                 print(f"\n>>>> Accion de {j2.nombre} : ", sep="")
                 j2.atacar(j1)
                 winsound.PlaySound('img\\attack.wav',winsound.SND_ALIAS)
                 turno += 1
                 time.sleep(wait)
-        if j1.esta_vivo():
+        if j1.esta_vivo:
             print(f"\nHa ganado: {j1.nombre}")
             ganador = j1.nombre
-        elif j2.esta_vivo():
+        elif j2.esta_vivo:
             print(f"\nHa ganado: {j2.nombre} ")
             ganador = j2.nombre
         else:
@@ -134,26 +134,27 @@ class Level(abc.ABC):
             acaba cuando la vida de uno es 0
             devuelve el nombre del ganador
             """
-            wait = 1.5
+            wait = 0
             turno = 1
             ganador = None
             print(j1.nombre," vs. ",j2.nombre," y ",j3.nombre)
 
-            while j1.esta_vivo() and (j2.esta_vivo() or j3.esta_vivo()):
+            while j1.esta_vivo and (j2.esta_vivo or j3.esta_vivo):
                 print("\nTurno" , turno )
                 print(f">>>> Accion de {j1.nombre} : ", sep="")
 
-                if j2.esta_vivo() and j3.esta_vivo():
-                    op = input("atacar a (1) "+j2.nombre+" o (2) "+j3.nombre)
+                if j2.esta_vivo and j3.esta_vivo:
+                    print("atacar a (1) "+j2.nombre+" o (2) "+j3.nombre)
+                    op = input()
                     while op!="1" and op!="2":
                         op = input("opcion invalida:")
                     if op=="1":
                         target = j2
                     else:
                         target = j3
-                elif not j2.esta_vivo():
+                elif not j2.esta_vivo:
                     target = j3
-                elif not j3.esta_vivo():
+                elif not j3.esta_vivo:
                     target = j2
                 print("1 atacar, 2 usar habilidad")
                 op = input()
@@ -165,22 +166,22 @@ class Level(abc.ABC):
                 elif op =="2":
                     j1.usar_habilidad(target)
                 time.sleep(wait)
-                if(j2.esta_vivo()):
+                if(j2.esta_vivo):
                     print(f"\n>>>> Accion de {j2.nombre} : ", sep="")
                     j2.atacar(j1)
                     turno += 1
                     winsound.PlaySound('img\\attack.wav',winsound.SND_ALIAS)
                     time.sleep(wait)
-                if(j3.esta_vivo()):
+                if(j3.esta_vivo):
                     print(f">>>> Accion de {j3.nombre} : ", sep="")
                     j3.atacar(j1)
                     turno += 1
                     winsound.PlaySound('img\\attack.wav',winsound.SND_ALIAS)
                     time.sleep(wait)
-            if j1.esta_vivo():
+            if j1.esta_vivo:
                 print(f"\nHa ganado: {j1.nombre}")
                 ganador = j1.nombre
-            elif j2.esta_vivo():
+            elif j2.esta_vivo:
                 print(f"\nHa ganado: {j2.nombre} ")
                 ganador = j2.nombre
             else:
@@ -594,7 +595,9 @@ class Room3(Level):
         """
         Trama en el foso
         """
-        self.notificar(1.4,"encuentras al elfo junto a una alcantarilla",
+        self.update(["explorar"])
+        op = self.validar()
+        self.notificar(1.4,"encuentras a un elfo junto a una alcantarilla",
         "detrás cientas de ratas detienen el camino",
                         "\"Dime la clave y sabré que eres el indicado\"")
         txt = input()
@@ -604,24 +607,28 @@ class Room3(Level):
                     "\"te has ganado el pergamino de Hielo\"",
                     "acompañame y pasamos las Ratas Eternas")
             self.notificar(1,"El elfo lanza un hechizo y congela las ratas...")
-            
+            self.notificar(1.4,"avanzas hasta el fondo...",
+            "encuentras un generador \"Inheritas Ad Infinitum\"",
+            "lo destruyes y ves como cada rata desaparece...",
+            "subes la escalera y descubres una iglesia...")
+            self.ex_nihil()
         else:
-            self.notificar(1,"\"Aún puedes probarte\"",
+            self.notificar(1.5,"\"Aún puedes probarte\"",
                         "\"sobrevive por tu cuenta\"")
             vida = self.player.vida
-            ratag = Enemigo("rata gigante",40,0,20,400)
-            rata = Enemigo("rata poseida",60,1,40,300)
+            ratag = Enemigo("rata gigante",40,0,35,700)
+            rata = Enemigo("rata poseida",60,1,50,450)
             win = self.combate2(self.player,ratag,rata)
             if win!=self.player.nombre:
                 self.player.vida = vida
                 self.right_path()
+            self.notificar(1.5,"Huyes antes de que las demás ratas se acercan",
+            "al subir descubres una iglesia de domo dorado")
+            self.ex_nihil()
             
-        self.notificar(1.4,"avanzas hasta el fondo...",
-            "encuentras un generador \"Inheritas Ad Infinitum\"",
-            "lo destruyes y ves como cada rata desaparece...",
-            "subes la escalera y descubres una iglesia...")
+        
             
-        self.ex_nihil()
+        
 
     def ex_nihil(self):
         """
@@ -649,7 +656,7 @@ class Room3(Level):
             self.notificar(1.5,"Ultimos Secretos","Inheritas y Polymorphismus:",
             "Obten los métodos y atributos de una clase madre",
             "Modificalos a tu voluntad")
-
+            print("mostrando booleanos de poder válido")
             print(self.ice,self.fire,self.lighting)
             self.update(["hielo","fuego","electricidad"])
 
@@ -663,6 +670,9 @@ class Room3(Level):
 
             elif op == self.actions[4] and self.lighting:
                 dragon = ElectricDragon(name, 900,200)
+            else:
+                self.notificar(1,"Sin pergamino","creando dragon base")
+                dragon = Dragon(name, 800,100)
         else:
             dragon = Dragon(name, 800,100)
         dragon.atributos()
@@ -673,13 +683,13 @@ class Room3(Level):
         Batalla Final
         """
 
-        self.notificar(1.2,"montas "+dragon.nombre+" y se elevan",
+        self.notificar(1.4,"montas "+dragon.nombre+" y se elevan",
         "descienden al palacio destruyendo el techo","el trono está vacío",
         "pero un rugido se escucha...")
-
-        self.notificar(1.2,"y emerge otro dragón desde el suelo",
+        winsound.PlaySound('img\\roar.wav',winsound.SND_ALIAS) 
+        self.notificar(1.4,"y emerge otro dragón desde el suelo",
             "El gran tirano ha instanciado su propio dragón")
-
+        
         boss = Dragon("Balerion",1200,120)
         winsound.PlaySound('img\\end.wav',winsound.SND_ASYNC)
         win = self.combate3(dragon,boss)
@@ -709,7 +719,7 @@ class Room3(Level):
         turno = 1
         ganador = None
         print(j1.nombre," vs. ",j2.nombre)
-        while j1.esta_vivo() and j2.esta_vivo():
+        while j1.esta_vivo and j2.esta_vivo:
 
             print("\nTurno" , turno )
             print(f">>>> Accion de {j1.nombre} : ", sep="")
@@ -724,16 +734,16 @@ class Room3(Level):
             elif op == "3":
                 j1.cargar_ataque(j2)
             time.sleep(wait)
-            if(j2.esta_vivo()):
+            if(j2.esta_vivo):
                 print(f"\n>>>> Accion de {j2.nombre} : ", sep="")
                 j2.atacar(j1)
                 turno += 1
                 time.sleep(wait)
 
-        if j1.esta_vivo():
+        if j1.esta_vivo:
             print(f"\nHa ganado: {j1.nombre}")
             ganador = j1.nombre
-        elif j2.esta_vivo():
+        elif j2.esta_vivo:
             print(f"\nHa ganado: {j2.nombre} ")
             ganador = j2.nombre
         else:

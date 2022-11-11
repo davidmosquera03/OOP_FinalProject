@@ -3,6 +3,7 @@ from Levels import Room1,Room2,Room3,World
 from Preguntas import banco1,banco2,banco3
 import time
 import winsound
+
 winsound.PlaySound('img\\intro.wav',winsound.SND_ASYNC) 
 time.sleep(2)
 print("Bienvenido")
