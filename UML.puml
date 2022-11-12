@@ -7,9 +7,9 @@ class Personaje{
 +defensa: Float
 +vida: Float 
 +nivel: int
++esta_vivo:bool
 +atributos()
 +subir_nivel()
-+esta_vivo()
 +morir()
 +daño()
 +atacar()

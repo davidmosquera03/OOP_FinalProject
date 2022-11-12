@@ -352,7 +352,9 @@ class Dragon(Personaje):
             self.charging = True
             self.fuerza *= 2
             print("Fuerza es ",self.fuerza)
-
+    def morir(self):
+        self.vida = 0
+        print(f" El dragón {self.nombre} está muerto")
 class IceDragon(Dragon):
     def bajar_defensa(self,enemigo:Enemigo):
         """
