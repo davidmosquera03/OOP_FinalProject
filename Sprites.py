@@ -96,27 +96,27 @@ class Personaje:
         pass
 ##PARTE DE HERENCIA
 class Guerrero(Personaje):
-    def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
+    def __init__(self, nombre, fuerza=25, inteligencia=5, defensa=20, vida=100):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.espada = 1
-        self.cambiar_arma()
+        #self.cambiar_arma()
 
-    def cambiar_arma(self):
-        while True: 
-            try:
-                opcion = int(input("Elige un arma: (1) Acero Valkyria, espada +8 defensa +5."+ 
-                                        "(2) Matadragones, espada +10 \n"))
+    def cambiar_arma(self,opcion):
+        #while True: 
+        #   try:
+         #       opcion = int(input("Elige un arma: (1) Acero Valkyria, espada +8 defensa +5."+ 
+           #                             "(2) Matadragones, espada +10 \n"))
                 if opcion == 1:
                     self.espada +=8
                     self.defensa+=5
-                    break
+          #          break
                 elif opcion ==2:
                     self.espada+=10
-                    break
+            #        break
                 else:
                     print("Numero no valido")
-            except:
-                print("Se requiere un numero")
+            #except:
+             #   print("Se requiere un numero")
 
     def subir_nivel(self, increase: int):
         super().subir_nivel(increase)
@@ -145,27 +145,27 @@ class Guerrero(Personaje):
         print(f"su fuerza es ahora {enemigo.fuerza}")
 
 class Mago(Personaje):
-    def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
+    def __init__(self, nombre, fuerza=10, inteligencia=20, defensa=15, vida=80):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)  
         self.libro = 1
-        self.cambiar_arma()    
+        #self.cambiar_arma()    
     
-    def cambiar_arma(self):
-        while True: 
-            try:
-                opcion = int(input("Elige un arma: (1) Cetro Vampirico, libro +14."+
-                            " (2) Cetro de Valhala , libro +10 vida+5\n"))
+    def cambiar_arma(self, opcion):
+        #while True: 
+         #   try:
+          #      opcion = int(input("Elige un arma: (1) Cetro Vampirico, libro +14."+
+           #                 " (2) Cetro de Valhala , libro +10 vida+5\n"))
                 if opcion == 1:
                     self.libro+=14
-                    break
+            #        break
                 elif opcion ==2:
                     self.libro =10
                     self.vida+=5
-                    break
+             #       break
                 else:
                     print("Numero no valido")
-            except:
-                print("Se requiere un numero")  
+            #except:
+             #   print("Se requiere un numero")  
         
     def atributos(self):
         super().atributos()  
@@ -194,28 +194,28 @@ class Mago(Personaje):
         print(f"su defensa es ahora {enemigo.defensa}")
 
 class Arquero(Personaje):
-    def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
+    def __init__(self, nombre, fuerza=15, inteligencia=10, defensa=15, vida=90):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.critico = 1
         self.gancho = False
-        self.cambiar_arma()
+        #self.cambiar_arma()
     
-    def cambiar_arma(self):
-         while True: 
-            try:
-                opcion = int(input("Elige un arma: (1) Arco Ionico, critico +8 vida +5."+
-                                             "(2) MataKrakens , critico +12\n "))
+    def cambiar_arma(self, opcion):
+         #while True: 
+           # try:
+                #opcion = int(input("Elige un arma: (1) Arco Ionico, critico +8 vida +5."+
+                #                             "(2) MataKrakens , critico +12\n "))
                 if opcion == 1:
                     self.critico += 8
                     self.vida+=5
-                    break
+                    #break
                 elif opcion ==2:
                     self.critico += 12
-                    break
+                   # break
                 else:
                     print("Numero no valido")
-            except:
-                print("Se requiere un numero")  
+            #except:
+                #print("Se requiere un numero")  
     
     def atributos(self):
         super().atributos()
