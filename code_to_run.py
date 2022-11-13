@@ -6,8 +6,10 @@ import winsound
 
 winsound.PlaySound('img\\intro.wav',winsound.SND_ASYNC) 
 time.sleep(2)
+
 print("Bienvenido")
 print("La tierra está en caos, el Gran Tirano ha tomado control")
+
 time.sleep(2)
 print("Debemos instanciar un Personaje héroe capaz de crear un Dragón para derrotarlo")
 print("Dale un nombre para empezar:")
@@ -28,11 +30,11 @@ print("Escoge un arma con que empezar:")
 op = int(op)
 time.sleep(1)
 if op==1:       #nombre, fuerza, inteligencia, defensa, vida
-    p1 = Guerrero(name,25,5,20,100) 
+    p1 = Guerrero(name) 
 elif op==2:
-    p1 = Mago(name,10,20,15,80) 
+    p1 = Mago(name) 
 else:
-    p1 = Arquero(name, 15,10,15,90) 
+    p1 = Arquero(name) 
 print("Ha sido creado un Personaje p1 con nombre",p1.nombre,". Mira tus atributos:")
 p1.atributos()
 time.sleep(1)

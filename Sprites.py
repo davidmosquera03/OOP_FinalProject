@@ -96,7 +96,7 @@ class Personaje:
         pass
 ##PARTE DE HERENCIA
 class Guerrero(Personaje):
-    def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
+    def __init__(self, nombre, fuerza=25, inteligencia=5, defensa=20, vida=100):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.espada = 1
         self.cambiar_arma()
@@ -145,7 +145,7 @@ class Guerrero(Personaje):
         print(f"su fuerza es ahora {enemigo.fuerza}")
 
 class Mago(Personaje):
-    def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
+    def __init__(self, nombre, fuerza=10, inteligencia=20, defensa=15, vida=80):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)  
         self.libro = 1
         self.cambiar_arma()    
@@ -194,14 +194,14 @@ class Mago(Personaje):
         print(f"su defensa es ahora {enemigo.defensa}")
 
 class Arquero(Personaje):
-    def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
+    def __init__(self, nombre, fuerza=15, inteligencia=10, defensa=15, vida=90):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.critico = 1
         self.gancho = False
         self.cambiar_arma()
     
     def cambiar_arma(self):
-         while True: 
+        while True: 
             try:
                 opcion = int(input("Elige un arma: (1) Arco Ionico, critico +8 vida +5."+
                                              "(2) MataKrakens , critico +12\n "))
