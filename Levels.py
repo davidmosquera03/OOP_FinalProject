@@ -4,6 +4,7 @@ import time
 import abc
 from Preguntas import Pregunta
 import winsound
+from visual import *
 
 class Level(abc.ABC):
     def __init__(self, actions : List[str], info : str, player: Personaje, banco: List[Pregunta]) -> None:

@@ -1,6 +1,7 @@
 import time
 import winsound
 from random import randint
+from visual import *
 
 class Personaje:
 
