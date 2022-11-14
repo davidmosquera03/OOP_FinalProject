@@ -10,11 +10,11 @@ class Level(abc.ABC):
         """
         Constructor de clase Abstracta Level
 
-        actions: acciones que puede tomar el Personaje
-        info: descripción inicial del escenario
-        next: siguiente nivel
-        player: Personaje en el nivel
-        banco: Banco de preguntas disponibles en el nivel
+        + actions: acciones que puede tomar el Personaje
+        + info: descripción inicial del escenario
+        + next: siguiente nivel
+        + player: Personaje en el nivel
+        + banco: Banco de preguntas disponibles en el nivel
         """
         self.og_actions = actions
         self.actions=["usar poción","ver atributos"]
@@ -56,7 +56,7 @@ class Level(abc.ABC):
         valida si esta en lista de acciones
 
         mantiene en ciclo para acciones basicas:
-        -usar pocion
+        - usar pocion
         - ver atributos 
         """
         on = True
@@ -84,7 +84,6 @@ class Level(abc.ABC):
             self.next.enter()   
         else: 
             pass
-
     def combate(self,j1: Personaje,j2: Personaje):
         """
         Pelea entre dos personajes
@@ -92,12 +91,15 @@ class Level(abc.ABC):
         cada turno se atacan entre si
         acaba cuando la vida de uno es 0
         devuelve el nombre del ganador
+
+        + j1: Personaje del usuario que decide acciones
+        + j2: Contrincante del usuario
         """
         wait = 0
         turno = 1
         ganador = None
         print(j1.nombre," vs. ",j2.nombre)
-        while j1.esta_vivo and j2.esta_vivo:
+        while j1.esta_vivo and j2.esta_vivo: # Condición de ciclo principal
             print("\nTurno" , turno )
             print(f">>>> Accion de {j1.nombre} : ", sep="")
             print("1 atacar, 2 usar habilidad")
@@ -107,6 +109,7 @@ class Level(abc.ABC):
             if op =="1":
                 j1.atacar(j2)
                 winsound.PlaySound('img\\attack.wav',winsound.SND_ALIAS)
+                # Sonido básico de ataque
             elif op =="2":
                 j1.usar_habilidad(j2)
             time.sleep(wait)
@@ -128,12 +131,16 @@ class Level(abc.ABC):
 
     def combate2(self, j1: Personaje,j2: Personaje,j3: Personaje):
             """
-            Pelea entre dos personajes
+            Pelea 1 vs 2 personajes
 
             cada turno se atacan entre si
             acaba cuando la vida de uno es 0
             devuelve el nombre del ganador
+
+            + j1: Personaje del usuario que decide acciones
+            + j2 y j3: Contrincantes del usuario
             """
+
             wait = 0
             turno = 1
             ganador = None
@@ -193,13 +200,13 @@ class Level(abc.ABC):
 class Room1(Level):
     """
     Primer nivel
-    Cuartos con regresión
+    Cuartos con opción de regresar
 
     booleanos de actividades
-    defeat: Derrotar orco
-    potion: Hallar poción
-    askedr: Pregunta izquierda
-    askedl: Pregunta derecha
+    + defeat: Derrotar orco
+    + potion: Hallar poción
+    + askedr: Pregunta izquierda
+    + askedl: Pregunta derecha
     
     """
     defeat = False # Derrotar orco
@@ -321,11 +328,11 @@ class Room1(Level):
             self.actions.append("usar cuerda")
         op = self.validar()
 
-        if op ==self.actions[2]:
+        if op ==self.actions[2]: # Revisar arriba
                 self.notificar(1,"Una cuerda cuelga del techo")
                 self.right_path(again=True)
 
-        elif op == self.actions[3]:
+        elif op == self.actions[3]: # Saltar
                 serpiente = Enemigo("Serpiente marina",50,10,30,400)
                 vida = self.player.vida
                 win = self.combate(self.player,serpiente)
@@ -368,17 +375,17 @@ class Room2(Level):
         else:
             op = self.actions[2]
 
-        if op == self.actions[2]:
+        if op == self.actions[2]: # Buscar fogata
             self.notificar(1,"un hombre encapuchado reposa junto al fuego")
             self.notificar(0,"\"te he estado esperando\"",
                     "\"acompañame y te ayudo en tu misión\"")
             self.update(["aceptar","negarse"])
             op = self.validar()
-            if op == self.actions[2]:
+            if op == self.actions[2]: # Aceptar
                 self.notificar(0,"Con un movimiento rapido desaparecen...",
                                 "se encuentran en una guarida")
                 self.left_path()
-            elif op == self.actions[3]:
+            elif op == self.actions[3]: # Negarse
                 self.notificar(1.5,"\"De acuerdo, respeto tu decisión y me iré\"",
                                     "\"Sin embargo, cuidate de las gárgolas en camino...\""
                                     ,"poco despues su ida, notas dos figuras en vuelo sobre ti...")
@@ -561,7 +568,7 @@ class Room3(Level):
     def left_path(self): 
         """
         Trama de Inflitración
-        Worldbuilding
+        Construcción del transfondo del mundo
         
         """
         self.notificar(1.5,"avanzas por las calles","las casas están siendo vaciadas",
@@ -585,7 +592,7 @@ class Room3(Level):
             self.banco[2].hacer(self.player)
 
             self.notificar(1.3,"Aguantas el descontento de su ideología y te retiras",
-            "detener el Tirano y sus Herederos salvará la gente (?)")   
+            "detener el Tirano y sus Herederos salvará la gente")   
        
         self.notificar(1.5,"Sigues el camino hasta llegar frente a una iglesia",
         "su cupula dorada y el engravado: Ex Nihil Ecclesia")
@@ -638,13 +645,14 @@ class Room3(Level):
         self.notificar(2,"Te acercas al atrio","¡Es hora de crear un dragón!",
                         "escribe cada parte de la Clase para crearla")
         self.actions =["clase","atributos","metodos"]
-
+        # Sección de demostración de código
         while len(self.actions)!=0:
             print(self.actions)
             op = input()
 
             if op in self.actions:
                 self.notificar(1,self.guia[op])
+                # evita condicional usando diccionario
                 del self.guia[op]  
                 self.actions.remove(op) 
 
@@ -652,7 +660,7 @@ class Room3(Level):
         name = input()
 
         if self.ice or self.lighting:
-
+            # Si posee algun pergamino
             self.notificar(1.5,"Ultimos Secretos","Inheritas y Polymorphismus:",
             "Obten los métodos y atributos de una clase madre",
             "Modificalos a tu voluntad")
@@ -709,11 +717,16 @@ class Room3(Level):
 
     def combate3(self,j1: Dragon,j2: Dragon):
         """
-        Pelea entre dos personajes
+        Pelea entre dos dragones
 
-        cada turno se atacan entre si
-        acaba cuando la vida de uno es 0
-        devuelve el nombre del ganador
+        Cada turno el dragón principal j1
+        y el contrincante j2 se atacan hasta
+        reducir a 0 la vida del oponente.
+
+        j1 puede realizar un ataque básico,
+        reducir la defensa del oponente o 
+        cargar un ataque que aumenta su fuerza hasta 
+        8 veces
         """
         wait = 2
         turno = 1
@@ -756,9 +769,10 @@ class World:
         """
         Constructor de Mundo
 
-        PTR: primer elemento 
+        + PTR: primer elemento 
         (pointer)
-        ULT: ultimo elemento
+        + ULT: ultimo elemento
+        (tail)
         """
         self.PTR= None
         self.ULT = None
@@ -766,6 +780,8 @@ class World:
     def add_level(self, lvl: Level):
         """
         Añade un nivel a la cola
+
+        + lvl: nivel por añadir
         """
         if self.PTR is None:
             self.PTR = lvl
@@ -782,6 +798,6 @@ class World:
         L = self.PTR
         L.enter()
         print("Ha terminado el juego")
-        
+        # Mensaje final
         
 

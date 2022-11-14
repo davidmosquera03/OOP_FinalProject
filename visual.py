@@ -6,7 +6,7 @@ class visual:
     Generalizador para insertar fotos y
     videos con Tkinter y Tkvideo
     
-    path: ruta del directorio de la foto o video
+    + path: ruta del directorio de la foto o video
     """
     def __init__(self, path:str,):
         self.path = path

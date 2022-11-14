@@ -1,4 +1,4 @@
-# Nombre del juego
+# Lynx Game
 <p align="center">
 <img src="img//cover.jpg" alt="cover" width="300" height="300"/>
 <p>
@@ -8,9 +8,9 @@
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
 ## **Descripción**
-(game_name) Es una aventura de texto interactiva con elementos de una novela visual que permite repasar temas de la Programación Orientada a Objetos.
+Lynx game es una aventura de texto interactiva con elementos de una novela visual que permite repasar temas de la Programación Orientada a Objetos.
 
-El usuario juega como un Personaje creado para derrotar al Gran Tirano que ha tomado control de las tierras. Por medio de combates, decisiones, preguntas y exploración busca aumentar sus atributos y llegar a crear un poderoso Dragón y devolver la paz a la región.
+El usuario juega como un Personaje creado para derrotar al Gran Tirano que ha tomado control de las tierras. Por medio de combates, decisiones, preguntas y exploración busca aumentar sus atributos y crear un poderoso Dragón para devolver la paz a la región.
 
 El juego base contiene 3 niveles con múltiples ramificaciones, la narrativa completa se puede obtener en repetidos juegos.
 
@@ -54,8 +54,12 @@ Posee atributos promedio compensados con la probabilidad de daño crítico en su
 
 4. Por terminal o alguna otra herramienta clone el repositorio con el enlace 
 
+5. Instale *tkvideo* por medio de pip
+```
+pip install tkvideo
+```
 6. Ingrese al script code_to_run.py y ejecute el código por terminal 
 
-# Créditos Sonido :notes:
+# Créditos de sonido :notes:
 + *Motoi, Sakuraba.(2016).Nameless King on Album Dark Souls 3 OST*
 + *Kitamura, Yuka.(2016).Dark Souls 3 Main Theme on Album Dark Souls 3 OST*

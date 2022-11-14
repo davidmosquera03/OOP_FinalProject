@@ -5,7 +5,8 @@ import time
 import winsound
 
 winsound.PlaySound('img\\intro.wav',winsound.SND_ASYNC) 
-time.sleep(2)
+# Sonido asincrónico se reproduce hasta que otro lo interrumpa
+time.sleep(2) # Genera el retraso en ejecución
 
 print("Bienvenido")
 print("La tierra está en caos, el Gran Tirano ha tomado control")
@@ -29,7 +30,7 @@ while op not in n:
 print("Escoge un arma con que empezar:")
 op = int(op)
 time.sleep(1)
-if op==1:       #nombre, fuerza, inteligencia, defensa, vida
+if op==1:       # Instancia Personaje
     p1 = Guerrero(name) 
 elif op==2:
     p1 = Mago(name) 
@@ -47,17 +48,19 @@ dos = Room2(["buscar fogata", "seguir adelante"],
             "Te encuentras enfrente de un bosque tupido y oscuro,una fogata se ve en el fondo"
             ,p1,banco2)
 tres = Room3(["rodear","saltar"],"El castillo está rodeado por un foso inundado sin puente",p1,banco3)
-
+# Crean niveles con decisiones iniciales, descripción, 
+# jugador asociado y banco de preguntas
 mundo = World()
 mundo.add_level(one)
 mundo.add_level(dos)
 mundo.add_level(tres)
+# Crea un World y agregan los niveles
 print("Presiona Enter para Iniciar")
 on = input()
 while on!="":
     on = input()
 print("Comenzando...")
-winsound.PlaySound('img\\menu_exit.wav',winsound.SND_ALIAS) 
+winsound.PlaySound('img\\menu_exit.wav',winsound.SND_ALIAS) #Sonido básico interrumpe intro
 time.sleep(0.5)
-mundo.start()
+mundo.start() #Inicia Recorrido 
 

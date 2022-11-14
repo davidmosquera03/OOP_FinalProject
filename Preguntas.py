@@ -12,11 +12,11 @@ class Pregunta:
         """
         Constructor de clase de Pregunta
 
-        enunciado: pregunta
-        opciones: opciones de respuesta
-        correcta: indice de respuesta correcta
-        intentos: numero de intentos realizados
-        bono: recompensa en inteligencia 
+        + enunciado: pregunta
+        + opciones: opciones de respuesta
+        + correcta: indice de respuesta correcta
+        + intentos: numero de intentos realizados
+        + bono: recompensa en inteligencia 
         """
         for i in range(len(self.opciones)): # Agregar numeración a pregunta
             self.opciones[i]=" <"+str(i+1)+">"+self.opciones[i]
@@ -33,12 +33,15 @@ class Pregunta:
             print("Incorrecto")
             self.intentos+=1
             res = input()
+        # Se pregunta hasta que acierte
         player.inteligencia+= (self.bono)-(self.intentos-1)
+        # Se descuentan los intentos fallidos
         player.atributos()
         
     def __repr__(self) -> str:
         return f"{self.enunciado}"
 
+# Instancia preguntas a utilizar
 a = Pregunta("¿Cuál es un metodo?",
                 [" vida "," curar()"," defensa"],1,5) 
 
@@ -70,4 +73,4 @@ x = Pregunta("¿Qué expresión se refiere a la clase madre?"
 banco1 =[a,b,c] # Abstracción
 banco2 = [d,e]  # Encapsulación
 banco3=[f,g,x]     # Herencia y Polimorfismo
-
+# Asignan a bancos que serán importados por niveles
