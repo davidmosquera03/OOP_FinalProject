@@ -16,7 +16,7 @@ class visual:
         ventana = Tk()
         ventana.geometry("850x450")
         ventana.title("Lynx Game")
-        ventana.iconbitmap("1_lynx-lynx.ico")
+        ventana.iconbitmap("img\\1_lynx-lynx.ico")
         ventana.resizable(False, False)
         
         imagen = PhotoImage(file = path)
@@ -33,7 +33,7 @@ class visual:
         ventana = Tk()
         ventana.geometry("800x450")
         ventana.title("Lynx Game")
-        ventana.iconbitmap("1_lynx-lynx.ico")
+        ventana.iconbitmap("img\\1_lynx-lynx.ico")
         ventana.resizable(False, False)
 
         my_label = Label(ventana)
@@ -44,7 +44,7 @@ class visual:
         def destruir_ventana():
             ventana.destroy()
         
-        #ventana.after(6000,destruir_ventana)
+        ventana.after(5000,destruir_ventana)
         
         ventana.mainloop()
     
@@ -52,10 +52,10 @@ class visual:
         
 
 #prueba foto
-bienvenida = visual("--.png")
-bienvenida.foto("--.png")
+#bienvenida = visual("--.png")
+#bienvenida.foto("--.png")
 
 #prueba video
-Inicio = visual("--")
-Inicio.video_gif("--")
+#Inicio = visual("--")
+#Inicio.video_gif("--")
 

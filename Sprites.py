@@ -105,6 +105,8 @@ class Guerrero(Personaje):
     def cambiar_arma(self):
         while True: 
             try:
+                Inicio5 = visual("img\\5.mp4")
+                Inicio5.video_gif("img\\5.mp4")
                 opcion = int(input("Elige un arma: (1) Acero Valkyria, espada +8 defensa +5."+ 
                                         "(2) Matadragones, espada +10 \n"))
                 if opcion == 1:
@@ -154,6 +156,8 @@ class Mago(Personaje):
     def cambiar_arma(self):
         while True: 
             try:
+                Inicio6 = visual("img\\6.mp4")
+                Inicio6.video_gif("img\\6.mp4")
                 opcion = int(input("Elige un arma: (1) Cetro Vampirico, libro +14."+
                             " (2) Cetro de Valhala , libro +10 vida+5\n"))
                 if opcion == 1:
@@ -204,6 +208,8 @@ class Arquero(Personaje):
     def cambiar_arma(self):
         while True: 
             try:
+                Inicio7 = visual("img\\7.mp4")
+                Inicio7.video_gif("img\\7.mp4")
                 opcion = int(input("Elige un arma: (1) Arco Ionico, critico +8 vida +5."+
                                              "(2) MataKrakens , critico +12\n "))
                 if opcion == 1:
