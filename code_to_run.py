@@ -9,16 +9,13 @@ winsound.PlaySound('img\\intro.wav',winsound.SND_ASYNC)
 # Sonido ascincrónico se reproduce hasta que otro lo interrumpa
 time.sleep(2) # Genera el retraso en ejecución
 
-Inicio = visual("img\\1.mp4")
-Inicio.video_gif("img\\1.mp4")
-Inicio2 = visual("img\\2.mp4")
-Inicio2.video_gif("img\\2.mp4")
+video_gif("img\\1.mp4")
+video_gif("img\\2.mp4")
 print("Bienvenido")
 print("La tierra está en caos, el Gran Tirano ha tomado control")
 
 time.sleep(2)
-Inicio3 = visual("img\\3.mp4")
-Inicio3.video_gif("img\\3.mp4")
+video_gif("img\\3.mp4")
 print("Debemos instanciar un Personaje héroe capaz de crear un Dragón para derrotarlo")
 print("Dale un nombre para empezar:")
 name = input()
@@ -26,8 +23,7 @@ while len(name)==0:
     print("nombre es un atributo necesario")
     name = input()
 
-Inicio4 = visual("img\\4.mp4")
-Inicio4.video_gif("img\\4.mp4")
+video_gif("img\\4.mp4")
 print("Escoge una sub-clase ",name,": Tiene todo lo necesario de un Personaje")
 print("(1) Guerrero (2) Mago (3) Arquero")
 op = input()
@@ -50,8 +46,7 @@ p1.atributos()
 time.sleep(1)
 
 print("Desde otras dimensiones conocidas como Modulos estamos importando recursos para el mundo")
-Inicio8 = visual("img\\8.mp4")
-Inicio8.video_gif("img\\8.mp4")
+video_gif("img\\8.mp4")
 
 one = Room1(["izquierda","derecha"], 
             "Te encuentras en una cueva oscura, 2 caminos se distinguen",

@@ -217,20 +217,17 @@ class Room1(Level):
     # Booleanos para registrar avances en nivel
     def enter(self):
         print(self.info)
-        Room1 = visual("img\\Room1.png")
-        Room1.foto("img\\Room1.png")
+        foto("img\\Room1.png",3)
         print("Escribe la opción")
         op = self.validar()
         if op == self.actions[2]:
 
             if(not self.defeat):
                 enemigo1 = Enemigo("Orco",40,30,10,400)
-                Room2 = visual("img\\Room2.png")
-                Room2.foto("img\\Room2.png")
-                self.notificar(1.5,"Una figura se acerca...","¡Un orco hambriento!")
+                foto("img\\Room2.png")
+                self.notificar(1,"Una figura se acerca...","¡Un orco hambriento!")
                 print("Combate")
-                Room3 = visual("img\\Room3.png")
-                Room3.foto("img\\Room3.png")
+                foto("img\\Room3.png",2)
                 vida = self.player.vida
                 win = self.combate(self.player,enemigo1)
 
@@ -248,21 +245,18 @@ class Room1(Level):
                 self.left_path()
 
         elif op == self.actions[3]:
-            Room13 = visual("img\\Room13.png")
-            Room13.foto("img\\Room13.png")
+            foto("img\\Room13.png")
             self.notificar(1.25,"Un troll desarmado resguarda una puerta","No te ha visto aun")
             self.update(["atacar","acercarse"])
             op = self.validar()
             if op==self.actions[2]:
                 enemigo2 = Enemigo("Guardian",100,20,80,800)
-                Room14 = visual("img\\Room14.png")
-                Room14.foto("img\\Room14.png")
+                foto("img\\Room14.png")
                 self.notificar(2,"Del troll emerge un hacha que emana fuego","No hay vuelta atrás...")
                 vida = self.player.vida
                 win = self.combate(self.player,enemigo2)
                 if win!=self.player.nombre:
-                    Room16 = visual("img\\Room16.png")
-                    Room16.foto("img\\Room16.png")
+                    foto("img\\Room16.png")
                     self.notificar(1.5,"Tu magia es aún muy debil","El troll te aplasta")
                     self.update(self.og_actions)
                     self.player.vida = vida
@@ -271,9 +265,8 @@ class Room1(Level):
 
                 if not self.askedr:
                     self.askedr = True 
-                    Room17 = visual("img\\Room17.png")
-                    Room17.foto("img\\Room17.png")
-                    self.notificar(1.2,"«No enfrentes el mundo sin conocimiento»",
+                    foto("img\\Room17.png")
+                    self.notificar(0,"«No enfrentes el mundo sin conocimiento»",
                                 "«Puedo por medio de una Pregunta aumentar tu inteligencia...»"
                                     ,"«Cuanto antes aciertes, mayor la recompensa»")
                     self.banco[0].hacer(self.player)
@@ -292,24 +285,21 @@ class Room1(Level):
         """
         Tras derrotar orco
         """
-        Room4 = visual("img\\Room4.png")
-        Room4.foto("img\\Room4.png")
-        self.notificar(1.5,"Una salida de la cueva se ve por el tunel")
+        foto("img\\Room4.png")
+        self.notificar(1,"Una salida de la cueva se ve por el tunel")
         self.update(["revisar cuerpo","seguir","volver", "examinar muros"])
         op = self.validar()
 
         if op == self.actions[2]: # Revisar cuerpo
-            Room5 = visual("img\\Room5.png")
-            Room5.foto("img\\Room5.png")
-            self.notificar(1.5,"Encuentras una nota:",
+            foto("img\\Room5.png")
+            self.notificar(0,"Encuentras una nota:",
                             "\"los lobos guardianes estan listos en el bosque\"",
                             "\"el gris es el mas peligroso\"",
                             "\"cuidado al salir\"")
             if not self.potion:
                 self.potion = True
                 self.player.potions+=1
-                Room6 = visual("img\\Room6.png")
-                Room6.foto("img\\Room6.png")
+                foto("img\\Room6.png")
                 self.notificar(2,"¡Has hallado una poción!","cantidad actual:",self.player.potions)
             self.left_path()
 
@@ -321,31 +311,26 @@ class Room1(Level):
             self.enter()
 
         elif op == self.actions[5]: # Muros
-            Room7 = visual("img\\Room7.png")
-            Room7.foto("img\\Room7.png")
-            self.notificar(1.8,"Dibujos grabados en la pared:"
+            foto("img\\Room7.png",6)
+            self.notificar(0,"Dibujos grabados en la pared:"
                             ,"de un templo emerge un dragón"
                             ,"Una frase debajo: Ex Nihilo Ecclesia"
                             ,"El dragón incendia y derriba una torre",
                              "notas runas antiguas...")
             if not self.askedl:
                 if self.player.inteligencia>=10:
-                    Room8 = visual("img\\Room8.png")
-                    Room8.foto("img\\Room8.png")
-                    self.notificar(1.5,"tu inteligencia permite leerlas",
+                    foto("img\\Room8.png")
+                    self.notificar(0,"tu inteligencia permite leerlas",
                                     "\"Abstractio, Encapsulation, Hereditas, Polymorphismus\"",
                                     "\"Domina los principios y controlarás los objetos\"")
                 else:
-                    Room9 = visual("img\\Room9.png")
-                    Room9.foto("img\\Room9.png")
-                    self.notificar(1.4,"No logras descifrar su significado")
+                    foto("img\\Room9.png")
+                    self.notificar(0,"No logras descifrar su significado")
                 self.askedl = True
-                Room10 = visual("img\\Room10.png")
-                Room10.foto("img\\Room10.png")
-                self.notificar(1,"Tu presencia activa las runas...")
+                foto("img\\Room10.png")
+                self.notificar(0,"Tu presencia activa las runas...")
                 
-                Room12 = visual("img\\Room12.png")
-                Room12.foto("img\\Room12.png")
+                foto("img\\Room12.png")
                 self.banco[2].hacer(self.player)
             self.left_path()
 
@@ -353,9 +338,8 @@ class Room1(Level):
         """
         Gruta con lago
         """
-        Room20 = visual("img\\Room20.png")
-        Room20.foto("img\\Room20.png")
-        self.notificar(1.4,"Ante ti hay un lago profundo",
+        foto("img\\Room20.png")
+        self.notificar(0,"Ante ti hay un lago profundo",
                         "otro troll cuida la salida al otro lado")
         self.update(["revisar arriba","saltar"])
 
@@ -364,35 +348,30 @@ class Room1(Level):
         op = self.validar()
 
         if op ==self.actions[2]: # Revisar arriba
-                Room21 = visual("img\\Room21.png")
-                Room21.foto("img\\Room21.png")
-                self.notificar(1,"Una cuerda cuelga del techo")
+                foto("img\\Room21.png")
+                self.notificar(0,"Una cuerda cuelga del techo")
                 self.right_path(again=True)
 
         elif op == self.actions[3]: # Saltar
             
                 serpiente = Enemigo("Serpiente marina",50,10,30,400)
-                Room23 = visual("img\\Room23.png")
-                Room23.foto("img\\Room23.png")
+                foto("img\\Room23.png")
                 vida = self.player.vida
                 win = self.combate(self.player,serpiente)
                 if win!=self.player.nombre:
-                    self.notificar(1,"Tu magia es aún muy debil","La serpiete te aplasta")
+                    self.notificar(1,"Tu magia es aún muy debil","La serpiente te aplasta")
                     self.update(self.og_actions)
                     self.player.vida = vida
                     self.right_path()
                 else:
-                    Room24 = visual("img\\Room24.png")
-                    Room24.foto("img\\Room24.png")
-                    self.notificar(1,"sales mojado y cansado frente al troll")
-                    Room25 = visual("img\\Room25.png")
-                    Room25.foto("img\\Room25.png")
+                    foto("img\\Room24.png",2)
+                    self.notificar(0,"sales mojado y cansado frente al troll")
+                    foto("img\\Room25.png",2)
                     self.banco[1].hacer(self.player)
                     
 
         elif again and op==self.actions[4]: # Usar cuerda
-            Room22 = visual("img\\Room22.png")
-            Room22.foto("img\\Room22.png")
+            foto("img\\Room22.png")
             self.notificar(1,"Llegas a salvo junto al troll")
             if isinstance(self.player,Arquero): # Añadir habilidad?
                 

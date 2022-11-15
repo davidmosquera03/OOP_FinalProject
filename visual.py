@@ -1,52 +1,42 @@
 from tkinter import *
 from tkvideo import *
 
-class visual:
-    """
-    Generalizador para insertar fotos y
-    videos con Tkinter y Tkvideo
-    
-    + path: ruta del directorio de la foto o video
-    """
-    def __init__(self, path:str,):
-        self.path = path
+def foto(path,wait:int=5):
+    ventana = Tk()
+    ventana.geometry("850x450")
+    ventana.title("Lynx Game")
+    ventana.iconbitmap("img\\1_lynx-lynx.ico")
+    ventana.resizable(False, False)
+    ventana.overrideredirect(True)
         
-
-    def foto(self, path):
-        ventana = Tk()
-        ventana.geometry("800x450")
-        ventana.title("Lynx Game")
-        ventana.iconbitmap("img\\1_lynx-lynx.ico")
-        ventana.resizable(False, False)
+    imagen = PhotoImage(file = path)
+    Lblimagen = Label(ventana, image = imagen).place(x=0, y=0)
         
-        imagen = PhotoImage(file = path)
-        Lblimagen = Label(ventana, image = imagen).place(x=0, y=0)
+    def destruir_ventana():
+        ventana.destroy()
         
-        def destruir_ventana():
-            ventana.destroy()
+    ventana.after(wait*1000,destruir_ventana)
         
-        ventana.after(3000,destruir_ventana)
+    ventana.mainloop()
         
-        ventana.mainloop()
+def video_gif(path:str,wait:int=5):
+    ventana = Tk()
+    ventana.geometry("800x450")
+    ventana.title("Lynx Game")
+    ventana.iconbitmap("img\\1_lynx-lynx.ico")
+    ventana.resizable(False, False)
+    ventana.overrideredirect(True)
+    my_label = Label(ventana)
+    my_label.pack()
+    player = tkvideo(path, my_label, loop = 0, size = (800,450))
+    player.play()
         
-    def video_gif(self, path:str):
-        ventana = Tk()
-        ventana.geometry("800x450")
-        ventana.title("Lynx Game")
-        ventana.iconbitmap("img\\1_lynx-lynx.ico")
-        ventana.resizable(False, False)
-
-        my_label = Label(ventana)
-        my_label.pack()
-        player = tkvideo(path, my_label, loop = 0, size = (800,450))
-        player.play()
+    def destruir_ventana():
+        ventana.destroy()
         
-        def destruir_ventana():
-            ventana.destroy()
+    ventana.after(wait*1000,destruir_ventana)
         
-        ventana.after(3000,destruir_ventana)
-        
-        ventana.mainloop()
+    ventana.mainloop()
     
    
         
@@ -58,4 +48,3 @@ class visual:
 #prueba video
 #Inicio = visual("--")
 #Inicio.video_gif("--")
-
