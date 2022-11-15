@@ -48,7 +48,11 @@ else:
 print("Ha sido creado un Personaje p1 con nombre",p1.nombre,". Mira tus atributos:")
 p1.atributos()
 time.sleep(1)
+
 print("Desde otras dimensiones conocidas como Modulos estamos importando recursos para el mundo")
+Inicio8 = visual("img\\8.mp4")
+Inicio8.video_gif("img\\8.mp4")
+
 one = Room1(["izquierda","derecha"], 
             "Te encuentras en una cueva oscura, 2 caminos se distinguen",
                  p1, banco1)

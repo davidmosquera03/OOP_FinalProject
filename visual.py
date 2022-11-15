@@ -14,7 +14,7 @@ class visual:
 
     def foto(self, path):
         ventana = Tk()
-        ventana.geometry("850x450")
+        ventana.geometry("800x450")
         ventana.title("Lynx Game")
         ventana.iconbitmap("img\\1_lynx-lynx.ico")
         ventana.resizable(False, False)
@@ -25,7 +25,7 @@ class visual:
         def destruir_ventana():
             ventana.destroy()
         
-        ventana.after(6000,destruir_ventana)
+        ventana.after(3000,destruir_ventana)
         
         ventana.mainloop()
         
@@ -44,7 +44,7 @@ class visual:
         def destruir_ventana():
             ventana.destroy()
         
-        ventana.after(5000,destruir_ventana)
+        ventana.after(3000,destruir_ventana)
         
         ventana.mainloop()
     
