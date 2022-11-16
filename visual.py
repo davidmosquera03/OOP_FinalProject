@@ -8,7 +8,7 @@ def foto(path,wait:int=5):
     + wait: tiempo de espera antes de cerrar la ventana
     """
     ventana = Tk()
-    ventana.geometry("850x450")
+    ventana.geometry("800x450")
     ventana.title("Lynx Game")
     ventana.iconbitmap("img\\1_lynx-lynx.ico")
     ventana.resizable(False, False)
