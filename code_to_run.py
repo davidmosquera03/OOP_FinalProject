@@ -7,15 +7,13 @@ from visual import *
 
 winsound.PlaySound('img\\intro.wav',winsound.SND_ASYNC) 
 # Sonido ascincrónico se reproduce hasta que otro lo interrumpa
-time.sleep(2) # Genera el retraso en ejecución
+time.sleep(1) # Genera el retraso en ejecución
 
 video_gif("img\\1.mp4")
-video_gif("img\\2.mp4")
+video_gif("img\\2.mp4",4)
 print("Bienvenido")
 print("La tierra está en caos, el Gran Tirano ha tomado control")
-
-time.sleep(2)
-video_gif("img\\3.mp4")
+video_gif("img\\3.mp4",4)
 print("Debemos instanciar un Personaje héroe capaz de crear un Dragón para derrotarlo")
 print("Dale un nombre para empezar:")
 name = input()

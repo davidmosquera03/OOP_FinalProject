@@ -225,7 +225,7 @@ class Room1(Level):
             if(not self.defeat):
                 enemigo1 = Enemigo("Orco",40,30,10,400)
                 foto("img\\Room2.png")
-                self.notificar(1,"Una figura se acerca...","¡Un orco hambriento!")
+                self.notificar(0,"Una figura se acerca...","¡Un orco hambriento!")
                 print("Combate")
                 foto("img\\Room3.png",2)
                 vida = self.player.vida
@@ -246,7 +246,7 @@ class Room1(Level):
 
         elif op == self.actions[3]:
             foto("img\\Room13.png")
-            self.notificar(1.25,"Un troll desarmado resguarda una puerta","No te ha visto aun")
+            self.notificar(0.5,"Un troll desarmado resguarda una puerta","No te ha visto aun")
             self.update(["atacar","acercarse"])
             op = self.validar()
             if op==self.actions[2]:
@@ -381,7 +381,7 @@ class Room1(Level):
 
         if op == self.actions[3] or op == self.actions[4]:
             
-            self.notificar(1,"\"Puedo hablarte del primer secreto\"",
+            self.notificar(1.2,"\"Puedo hablarte del primer secreto\"",
                             "Abstractio:","Oculta los detalles de la implementación",
                             "facilita la interfaz")
             self.exit()
@@ -397,62 +397,74 @@ class Room2(Level):
     def enter(self,again:bool = False, alt = False):
         if not alt:
             print(self.info)
-            time.sleep(1)
+            video_gif("img\\Room2_1.mp4")
             op = self.validar()
         else:
             op = self.actions[2]
 
         if op == self.actions[2]: # Buscar fogata
+            video_gif("img\\Room2_18.mp4")
             self.notificar(1,"un hombre encapuchado reposa junto al fuego")
             self.notificar(0,"\"te he estado esperando\"",
                     "\"acompañame y te ayudo en tu misión\"")
             self.update(["aceptar","negarse"])
             op = self.validar()
             if op == self.actions[2]: # Aceptar
+                video_gif("img\\Room2_23.mp4")
                 self.notificar(0,"Con un movimiento rapido desaparecen...",
                                 "se encuentran en una guarida")
                 self.left_path()
             elif op == self.actions[3]: # Negarse
-                self.notificar(1.5,"\"De acuerdo, respeto tu decisión y me iré\"",
+                video_gif("img\\Room2_19.mp4",6)
+                self.notificar(0,"\"De acuerdo, respeto tu decisión y me iré\"",
                                     "\"Sin embargo, cuidate de las gárgolas en camino...\""
                                     ,"poco despues su ida, notas dos figuras en vuelo sobre ti...")
                 g = Enemigo("Gárgola dorada",40,20,60,600)
                 g2 = Enemigo("Gárgola plateada",30,10,50,400)
                 vida = self.player.vida
+                video_gif("img\\Room2_20.mp4")
                 win = self.combate2(self.player,g,g2)
                 if win!=self.player.nombre:
                     self.update(self.og_actions)
                     self.player.vida = vida
+                    video_gif("img\\Room2_22.mp4")
                     self.notificar(0,"Te derrotan")
                     self.enter()
                 else:
                     self.notificar(1.5,"Una gema es extraida de la Gárgola dorada",
                                 "Más Gárgolas se acercan...")
                     if self.player.inteligencia>=15:
+                        video_gif("img\\Room2_21.mp4")
                         self.notificar(0,"Detectas la información que almacena",\
                             "¡Rompes la encapsulación de las Gárgolas",
                             "logras reducir a 0 el atributo vida de los enemigos")
                     else:
-                        self.notificar(2,"pero no captas su poder",
+                        self.notificar(0,"pero no captas su poder",
                                         "te mueves escondiendote de los restantes")
-                    self.notificar(2,"avanzas adelante","ya se ve el castillo...")
+                    self.notificar(0.5,"avanzas adelante","ya se ve el castillo...")
                     self.exit()
                 
-        elif op == self.actions[3]:
-            self.notificar(1.2,"distingues unos aullidos...","se escuchan pisadas...")
+        elif op == self.actions[3]: # Seguir adelante
+            video_gif("img\\Room2_2.mp4")
+            self.notificar(0,"distingues unos aullidos...","se escuchan pisadas...")
             vida = self.player.vida
             lobo1 = Enemigo("lobo negro",35,10,20,50)
             lobo2 = Enemigo("lobo gris ",45,10,20,60)
+            video_gif("img\\Room2_3.mp4")
             win = self.combate2(self.player,lobo1,lobo2)
             if win!=self.player.nombre:
-                self.notificar(1.4,"una jauría de lobos llega para compartir su cena",
+                video_gif("img\\Room2_5.mp4")
+                self.notificar(0,"una jauría de lobos llega para compartir su cena",
                             "intenta de nuevo")
                 self.player.vida = vida
                 self.enter()
             else:
-                self.notificar(1.5,"no puedes evitar correr al oir mas lobos en camino"
+                video_gif("img\\Room2_4.mp4")
+                self.notificar(0,"no puedes evitar correr al oir mas lobos en camino"
                                 ,"...")
-                self.notificar(1.5,"Agotado, llegas a una cabaña y cierras la puerta",
+                video_gif("img\\Room2_6.mp4")
+                video_gif("img\\Room2_7.mp4")
+                self.notificar(0,"Agotado, llegas a una cabaña y cierras la puerta",
                         "los lobos esperan afuera hambrientos",
                         "hay enormes estantes derribados y una ventana rota")
                 self.right_path()
@@ -462,15 +474,16 @@ class Room2(Level):
         Guarida hechicero
         """
         if alt:
-            self.notificar(1.5,"Un hechichero te recibe en su guarida",
+            video_gif("img\\Room2_13.mp4")
+            self.notificar(0,"Un hechichero te recibe en su guarida",
                              "\"No esperaba encontrarte aun\"","\"Bienvenido\"")
         if self.player.vida<=60:
             self.player.potions+=2
             self.notificar(1.4,"Ante tus heridas recibes 2 pociones",
                         "cantidad actual:",self.player.potions)
 
-
-        self.notificar(1.5,"\"Tenemos agentes para dejarte entrar\"",
+        video_gif("img\\Room2_24.mp4")
+        self.notificar(0,"\"Tenemos agentes para dejarte entrar\"",
                             "\"Ve al fondo del foso\"",
                         "\"Busca un elfo y da la contraseñas: Invictus\"")
         self.notificar(1,"\"¿Deseas algo más?\"",
@@ -482,9 +495,11 @@ class Room2(Level):
             self.exit()
 
         elif op == self.actions[3]:
+            video_gif("img\\Room2_26.mp4")
             self.notificar(1,"\"Bien\"","\"recibe mi Pregunta...\"")
             self.banco[1].hacer(self.player)
-            self.notificar(1.5,"Segundo secreto","Encapsulation",
+            video_gif("img\\Room2_27.mp4")
+            self.notificar(0,"Segundo secreto","Encapsulation",
                     "restringe el acceso directo entre clases")
             self.exit()
 
@@ -493,15 +508,17 @@ class Room2(Level):
         Cabaña alternativa
         """
         self.update(["levantar librero","atacar desde ventana"])
-        self.notificar(1,"Encuentras una poción en el piso")
-        self.player.potions += 1
+        
         if not self.asked:
+            self.notificar(1,"Encuentras una poción en el piso")
+            self.player.potions += 1
             self.actions.append("revisar libro")
         op = self.validar()
 
         if op == self.actions[2]: # Levantar librero
             if isinstance(self.player,Guerrero):
-                self.notificar(1,"con tu fuerza logras levantar el librero",
+                video_gif("img\\Room2_15.mp4")
+                self.notificar(0,"con tu fuerza logras levantar el librero",
                             "descubres una salida subterránea")
                 self.exit()
             else:
@@ -510,22 +527,27 @@ class Room2(Level):
 
         elif op == self.actions[3]: # Atacar desde ventana
             if isinstance(self.player,Arquero):
-                self.notificar(1,"los lobos son derribados por tus flechas",
+                video_gif("img\\Room2_8.mp4")
+                self.notificar(0,"los lobos son derribados por tus flechas",
                                 "los restantes huyen asustados",
                                 "corres a la fogata... ")
                 self.enter(alt=True)
+                video_gif("img\\Room2_9.mp4")
             else:
                 self.notificar(1,"tu rango es insuficiente")
                 self.right_path()
 
         elif not self.asked and op == self.actions[4]:
-            self.notificar(2,"El libro está desgastado pero conserva todavia poder",
+            video_gif("img\\Room2_10.mp4")
+            self.notificar(0.5,"El libro está desgastado pero conserva todavia poder",
                             "\"Encapsulation: Guarda a atributos y métodos en clases\"",
                              "\"limita el accesso de las otras clases a ella\"")
             self.asked = True
+            video_gif("img\\Room2_11.mp4")
             self.banco[0].hacer(self.player)
             if isinstance(self.player,Mago):
-                self.notificar(2,"notas un espejo mágico con tu inteligencia",
+                video_gif("img\\Room2_12.mp4")
+                self.notificar(0,"notas un espejo mágico con tu inteligencia",
                             "entras antes de que los lobos destrozen la puerta...")
                 self.left_path(alt=True)
             else:
@@ -555,8 +577,8 @@ class Room3(Level):
         print(self.info)
         op = self.validar()
         if op == self.actions[2]: # Rodear
-
-            self.notificar(1.5,"una torre se encuentra del otro lado del foso"
+            video_gif("img\\Room3_1.mp4")
+            self.notificar(0,"una torre se encuentra del otro lado del foso"
                             ,"un guardia se aproxima desde el bosque...")
             self.update(["atacar","saltar"])
             if isinstance(self.player,Arquero) and self.player.gancho:
@@ -564,29 +586,35 @@ class Room3(Level):
             op = self.validar()
 
             if op == self.actions[2]:
+                video_gif("img\\Room3_2.mp4")
                 guardia = Enemigo("guardia acorazado",45,40,120,350)
                 vida = self.player.vida 
                 win = self.combate(self.player,guardia)
                 if win!=self.player.nombre:
-                    self.notificar(1,"El guardia rie","HAHAHA",
+                    video_gif("img\\Room3_3.mp4")
+                    self.notificar(0,"El guardia rie","HAHAHA",
                                     "\"Subestimas los Herederos del Tirano\""
                                     "\"Nuestros atributos provienen de él\"")
                     self.player.vida = vida
                     self.enter()
                 else:
-                    self.notificar(1.5,"Te pones el uniforme del guardia caido",
+                    video_gif("img\\Room3_4.mp4")
+                    video_gif("img\\Room3_5.mp4")
+                    self.notificar(0,"Te pones el uniforme del guardia caido",
                                 "saludando ante la puerta te abre un guardia")
                     self.left_path()
             elif op == self.actions[3]: # Saltar
                 self.right_path()
 
             elif op == self.actions[4]:
-                self.notificar(1.2,"atas la cuerda a una flecha especial",
+                video_gif("img\\Room3_6.mp4")
+                self.notificar(0,"atas la cuerda a una flecha especial",
                                 "la disparas contra la cima de la torre y escalas")
-                self.notificar(1.2,"en la cima descubres un pergamino que brilla",
+                self.notificar(0,"en la cima descubres un pergamino que brilla",
                         "describe los metodos de un dragón eléctrico")
                 self.lighting = True
-                self.notificar(1.5,"en el fondo distingues Ex Nihil por su cupula dorada..."
+                video_gif("img\\Room3_7.mp4")
+                self.notificar(0,"en el fondo distingues Ex Nihil por su cupula dorada..."
                         "saltas por las murallas hasta llegar")
                 self.ex_nihil()
         elif op == self.actions[3]:
@@ -598,30 +626,32 @@ class Room3(Level):
         Construcción del transfondo del mundo
         
         """
-        self.notificar(1.5,"avanzas por las calles","las casas están siendo vaciadas",
+        video_gif("img\\Room3_8.mp4")
+        self.notificar(0,"avanzas por las calles","las casas están siendo vaciadas",
         "los habitantes remplazados por gente idéntica al guardia que acabaste...")
 
         self.update(["investigar","seguir"])
         op = self.validar()
         if op == self.actions[2]:
-
-            self.notificar(1.5,"entras a una casa",
+            video_gif("img\\Room3_9.mp4")
+            video_gif("img\\Room3_10.mp4")
+            self.notificar(0,"entras a una casa",
             "otro soldado igual te habla mirando un número en tu uniforme",
             "\"Inheritus 154 vuelve a tu puesto\"",
             "\"Suprimir los humanos polimorfos no ha acabado\"",
             "\"Debo recordarte la importancia de la Herencia en nuestro orden...\"")
-
+            video_gif("img\\Room3_11.mp4")
             self.banco[0].hacer(self.player)
-
-            self.notificar(1.2,"\"Nuestra clase madre es Humano, y el tirano su mejor objeto\"",
+            video_gif("img\\Room3_14.mp4")
+            self.notificar(0,"\"Nuestra clase madre es Humano, y el tirano su mejor objeto\"",
             "\"piensa en como invocar su herencia en ti\"") 
-
+            video_gif("img\\Room3_13.mp4")
             self.banco[2].hacer(self.player)
-
+            video_gif("img\\Room3_15.mp4")
             self.notificar(1.3,"Aguantas el descontento de su ideología y te retiras",
             "detener el Tirano y sus Herederos salvará la gente")   
-       
-        self.notificar(1.5,"Sigues el camino hasta llegar frente a una iglesia",
+        video_gif("img\\Room3_16.mp4")
+        self.notificar(0,"Sigues el camino hasta llegar frente a una iglesia",
         "su cupula dorada y el engravado: Ex Nihil Ecclesia")
         self.ex_nihil()
 
@@ -631,31 +661,40 @@ class Room3(Level):
         """
         self.update(["explorar"])
         op = self.validar()
-        self.notificar(1.4,"encuentras a un elfo junto a una alcantarilla",
+        video_gif("img\\Room3_17.mp4")
+        video_gif("img\\Room3_18.mp4")
+        self.notificar(0,"encuentras a un elfo junto a una alcantarilla",
         "detrás cientas de ratas detienen el camino",
                         "\"Dime la clave y sabré que eres el indicado\"")
         txt = input()
         if txt == "Invictus":
             self.ice = True
-            self.notificar(1.5,"\"Perfecto\"",
+            video_gif("img\\Room3_19.mp4")
+            self.notificar(0.5,"\"Perfecto\"",
                     "\"te has ganado el pergamino de Hielo\"",
                     "acompañame y pasamos las Ratas Eternas")
+            video_gif("img\\Room3_20.mp4")
             self.notificar(1,"El elfo lanza un hechizo y congela las ratas...")
-            self.notificar(1.4,"avanzas hasta el fondo...",
+            video_gif("img\\Room3_21.mp4")
+            video_gif("img\\Room3_22.mp4")
+            self.notificar(0,"avanzas hasta el fondo...",
             "encuentras un generador \"Inheritas Ad Infinitum\"",
             "lo destruyes y ves como cada rata desaparece...",
             "subes la escalera y descubres una iglesia...")
             self.ex_nihil()
         else:
-            self.notificar(1.5,"\"Aún puedes probarte\"",
+            video_gif("img\\Room3_23.mp4")
+            self.notificar(0,"\"Aún puedes probarte\"",
                         "\"sobrevive por tu cuenta\"")
             vida = self.player.vida
+            video_gif("img\\Room3_24.mp4")
             ratag = Enemigo("rata gigante",40,0,35,700)
             rata = Enemigo("rata poseida",60,1,50,450)
             win = self.combate2(self.player,ratag,rata)
             if win!=self.player.nombre:
                 self.player.vida = vida
                 self.right_path()
+            video_gif("img\\Room3_25.mp4")
             self.notificar(1.5,"Huyes antes de que las demás ratas se acercan",
             "al subir descubres una iglesia de domo dorado")
             self.ex_nihil()
@@ -668,8 +707,10 @@ class Room3(Level):
         """
         Iglesia de Instanciación
         """
+        video_gif("img\\Room3_12.mp4")
         self.banco[1].hacer(self.player)
-        self.notificar(2,"Te acercas al atrio","¡Es hora de crear un dragón!",
+        video_gif("img\\Room3_26.mp4")
+        self.notificar(0,"Te acercas al atrio","¡Es hora de crear un dragón!",
                         "escribe cada parte de la Clase para crearla")
         self.actions =["clase","atributos","metodos"]
         # Sección de demostración de código
@@ -682,15 +723,17 @@ class Room3(Level):
                 # evita condicional usando diccionario
                 del self.guia[op]  
                 self.actions.remove(op) 
-
+        video_gif("img\\Room3_27.mp4")
         self.notificar(1,"¿Qué nombre le darás?")
         name = input()
 
         if self.ice or self.lighting:
             # Si posee algun pergamino
-            self.notificar(1.5,"Ultimos Secretos","Inheritas y Polymorphismus:",
+            video_gif("img\\Room3_28.mp4")
+            self.notificar(0.5,"Ultimos Secretos","Inheritas y Polymorphismus:",
             "Obten los métodos y atributos de una clase madre",
             "Modificalos a tu voluntad")
+            video_gif("img\\Room3_29.mp4")
             print("mostrando booleanos de poder válido")
             print(self.ice,self.fire,self.lighting)
             self.update(["hielo","fuego","electricidad"])
@@ -717,27 +760,33 @@ class Room3(Level):
         """
         Batalla Final
         """
-
-        self.notificar(1.4,"montas "+dragon.nombre+" y se elevan",
+        video_gif("img\\Room3_30.mp4")
+        self.notificar(0.5,"montas "+dragon.nombre+" y se elevan",
         "descienden al palacio destruyendo el techo","el trono está vacío",
         "pero un rugido se escucha...")
-        winsound.PlaySound('img\\roar.wav',winsound.SND_ALIAS) 
-        self.notificar(1.4,"y emerge otro dragón desde el suelo",
+        winsound.PlaySound('img\\roar.wav',winsound.SND_ALIAS)
+        video_gif("img\\Room3_31.mp4") 
+        self.notificar(0,"y emerge otro dragón desde el suelo",
             "El gran tirano ha instanciado su propio dragón")
-        
+        video_gif("img\\Room3_32.mp4") 
         boss = Dragon("Balerion",1200,120)
         winsound.PlaySound('img\\end.wav',winsound.SND_ASYNC)
         win = self.combate3(dragon,boss)
         if win!=dragon.nombre:
-            self.notificar(1.2,"intentas descender de tu dragon muerto...",
+            video_gif("img\\Room3_33.mp4") 
+            video_gif("img\\Room3_34.mp4") 
+            video_gif("img\\Room3_35.mp4") 
+            self.notificar(0.5,"intentas descender de tu dragon muerto...",
             "la rafaga de fuego que te atraviesa no deja ni huesos que enterrar",
             "tú y tu dragón son las primeras muertes de la nueva Era de Terror del Gran Tirano")
 
         else:
-            self.notificar(1.5,dragon.nombre+" aterriza sobre el cuerpo de "+boss.nombre,
+            video_gif("img\\Room3_36.mp4") 
+            video_gif("img\\Room3_37.mp4") 
+            self.notificar(0,dragon.nombre+" aterriza sobre el cuerpo de "+boss.nombre,
             "el gran Tirano es aplastado",
             "mientras la vida se le escapa, ve como retiras su corona...")
-            self.notificar(2,"¿Te coronas como líder?",
+            self.notificar(1,"¿Te coronas como líder?",
             "¿O destituyes la monarquía?","Aprovecha lo que has ganado")
 
         self.exit()
